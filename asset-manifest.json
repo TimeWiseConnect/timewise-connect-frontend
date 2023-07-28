@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/react-gh-pages/static/js/main.783f08bb.js",
-    "index.html": "/react-gh-pages/index.html",
-    "main.783f08bb.js.map": "/react-gh-pages/static/js/main.783f08bb.js.map"
+    "main.js": "/timewise-connect-frontend/static/js/main.af8735ee.js",
+    "index.html": "/timewise-connect-frontend/index.html",
+    "main.af8735ee.js.map": "/timewise-connect-frontend/static/js/main.af8735ee.js.map"
   },
   "entrypoints": [
-    "static/js/main.783f08bb.js"
+    "static/js/main.af8735ee.js"
   ]
 }
