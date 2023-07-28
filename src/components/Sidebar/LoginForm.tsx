@@ -14,7 +14,7 @@ const LoginForm = () => {
             <Text>Телефон</Text>
             <PhoneInput value={phone} setValue={setPhone}></PhoneInput>
             <Text>
-                Нет аккаунта? <RedSpan>Зарегистрируйтесь</RedSpan>
+                Нет аккаунта? <Link href="">Зарегистрируйтесь</Link>
             </Text>
             <Button type="submit">Отправить СМС</Button>
         </LoginFormLayout>
@@ -35,11 +35,17 @@ const Text = styled.p`
     color: ${(props) => props.theme.gray};
 `
 
-const RedSpan = styled.span`
+const Link = styled.a`
     color: ${(props) => props.theme.link};
+    text-decoration: none;
 
     &:hover {
         color: ${(props) => props.theme.linkHover};
+    }
+
+    &:focus {
+        outline: ${(props) => props.theme.main} 1px solid;
+        border-radius: 3px;
     }
 `
 
@@ -52,7 +58,7 @@ const Button = styled.button`
     cursor: pointer;
 
     &:focus {
-        outline: ${(props) => props.theme.link} 1px solid;
+        outline: ${(props) => props.theme.focus} 1px solid;
     }
 `
 

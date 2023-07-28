@@ -44,13 +44,15 @@ const Sidebar = () => {
                             <Text>{currentUser?.name}</Text>
                         </div>
                     ) : (
-                        <InvisibleButton
+                        <ChangelingButton
                             onClick={() => {
                                 setIsCollapsed(!isCollapsed)
                             }}
+                            disabled={!isCollapsed}
+                            $isCollapsed={isCollapsed}
                         >
                             Войти
-                        </InvisibleButton>
+                        </ChangelingButton>
                     )}
                     {!isCollapsed && <LoginForm />}
                 </HeaderContainer>
@@ -150,6 +152,14 @@ const InvisibleButton = styled.button`
     color: ${(props) => props.theme.main};
     font-size: 16px;
     line-height: 130%;
+    &:focus {
+        outline: ${(props) => props.theme.main} 1px solid;
+        border-radius: 3px;
+    }
+`
+
+const ChangelingButton = styled(InvisibleButton)<SidebarProps>`
+    ${(props) => (props.$isCollapsed ? '' : 'cursor: auto')}
 `
 
 const Text = styled.p`

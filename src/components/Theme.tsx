@@ -22,6 +22,7 @@ type ColorTheme = {
     link: string
     linkHover: string
     danger: string
+    focus: string
 
     buttonText: string
     buttonOutlineText: string
@@ -57,6 +58,7 @@ const Theme = ({ children }: Props) => {
                   link: '#BF7281',
                   linkHover: '#B6465B',
                   danger: '#E23131',
+                  focus: '#FFCDD7',
 
                   buttonText: '#0F1523',
                   buttonOutlineText: '#C3C3C3',
@@ -83,6 +85,7 @@ const Theme = ({ children }: Props) => {
                   link: '#DBADB6',
                   linkHover: '#4F444D',
                   danger: '#F44242',
+                  focus: '#BF7281',
 
                   buttonText: '#181C26',
                   buttonOutlineText: '#181C26',
