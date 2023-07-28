@@ -1,26 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, useEffect } from 'react'
+import AppRouter from './router/AppRouter'
+import { createGlobalStyle, styled } from 'styled-components'
+import { useStore, useEvent } from 'effector-react'
+import { checkAuthFx } from './api/auth/auth'
+import { $isAuth, setLoadingFalse } from './store/auth'
+import Footer from './components/Footer'
+import { footerHeight } from './styles/const'
+import Theme from './components/Theme'
+import Sidebar from './components/Sidebar/Sidebar'
+import { changeTheme, theme } from './store/theme'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App: FC = () => {
+    useEffect(() => {
+        if (localStorage.getItem('auth')) fetchEvent()
+        else setLoadingFalse()
+    }, [])
+    useEffect(() => {
+        if (localStorage.getItem('theme')) changeTheme(localStorage.getItem('theme') as theme)
+    }, [])
+
+    const { isLoading } = useStore($isAuth)
+    const fetchEvent = useEvent(checkAuthFx)
+
+    return (
+        <div>
+            <GlobalStyle />
+            <Theme>
+                {!isLoading ? (
+                    <>
+                        <Layout>
+                            {/* <AppRouter /> */}
+                            <Sidebar />
+                        </Layout>
+                        <Footer />
+                    </>
+                ) : (
+                    <Layout>Loading</Layout>
+                )}
+            </Theme>
+        </div>
+    )
 }
 
-export default App;
+const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Golos Text', sans-serif;
+  }
+`
+
+const Layout = styled.div`
+    height: calc(100vh - ${footerHeight});
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    background-color: ${(props) => props.theme.bg};
+    transition: 300ms background-color;
+`
+
+export default App
