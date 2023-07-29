@@ -1,8 +1,10 @@
 import React from 'react'
 import { FooterPath } from './FooterPath'
+import { styled } from 'styled-components'
+import { device } from '../../../../styles/const'
 
 export const WhatsApp = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+    <SVG xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
         <g clipPath="url(#clip0_963_2672)">
             <FooterPath
                 fillRule="evenodd"
@@ -15,5 +17,21 @@ export const WhatsApp = () => (
                 <rect width="22" height="22" fill="white" />
             </clipPath>
         </defs>
-    </svg>
+    </SVG>
 )
+
+const SVG = styled.svg`
+    transition: 300ms all;
+
+    @media ${device.mobileS} {
+        transform: scale(1);
+    }
+
+    @media ${device.tablet} {
+        transform: scale(0.82);
+    }
+
+    @media ${device.laptop} {
+        transform: scale(1);
+    }
+`

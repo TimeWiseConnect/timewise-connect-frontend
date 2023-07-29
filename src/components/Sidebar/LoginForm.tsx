@@ -1,64 +1,98 @@
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { PhoneInput } from '../shared/PhoneInput'
+import { device } from '../../styles/const'
+import { Link } from '../../styles/Link'
+import { Button } from '../../styles/Button'
 
-const LoginForm = () => {
+const LoginForm = ({ isCollapsed }: { isCollapsed: boolean }) => {
     const [phone, setPhone] = useState('')
     return (
         <LoginFormLayout
+            $isCollapsed={isCollapsed}
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault()
                 // submitted()
             }}
         >
-            <Text>Телефон</Text>
-            <PhoneInput value={phone} setValue={setPhone}></PhoneInput>
+            <Label>Телефон</Label>
+            <PhoneInput tabIndex={isCollapsed ? -1 : 0} value={phone} setValue={setPhone}></PhoneInput>
             <Text>
-                Нет аккаунта? <Link href="">Зарегистрируйтесь</Link>
+                Нет аккаунта? <BR />
+                <Link
+                    tabIndex={isCollapsed ? -1 : 0}
+                    href="/"
+                    onClick={(event) => {
+                        event.preventDefault()
+                    }}
+                >
+                    Зарегистрируйтесь
+                </Link>
             </Text>
-            <Button type="submit">Отправить СМС</Button>
+            <Button
+                tabIndex={isCollapsed ? -1 : 0}
+                type="submit"
+                onClick={(event) => {
+                    event.currentTarget.blur()
+                }}
+            >
+                Отправить СМС
+            </Button>
         </LoginFormLayout>
     )
 }
 
-const LoginFormLayout = styled.form`
+type SidebarProps = {
+    $isCollapsed: boolean
+}
+
+const LoginFormLayout = styled.form<SidebarProps>`
+    width: 100%;
+    opacity: ${(props) => (props.$isCollapsed ? '0' : '1')};
     font-family: Golos Text;
     display: flex;
+    align-self: flex-start;
     flex-direction: column;
     transition: 300ms all;
 `
 
-const Text = styled.p`
-    font-size: 14px;
+const Label = styled.p`
     line-height: 130%;
-    margin-bottom: 10px;
     color: ${(props) => props.theme.gray};
-`
 
-const Link = styled.a`
-    color: ${(props) => props.theme.link};
-    text-decoration: none;
-
-    &:hover {
-        color: ${(props) => props.theme.linkHover};
+    @media ${device.tablet} {
+        margin-bottom: 5px;
+        font-size: 12px;
     }
 
-    &:focus {
-        outline: ${(props) => props.theme.main} 1px solid;
-        border-radius: 3px;
+    @media ${device.laptop} {
+        margin-bottom: 10px;
+        font-size: 14px;
     }
 `
 
-const Button = styled.button`
-    padding: 18px 60px;
-    border-radius: 10px;
-    background-color: ${(props) => props.theme.accent1};
-    color: ${(props) => props.theme.buttonText};
-    border: none;
-    cursor: pointer;
+const Text = styled.p`
+    line-height: 130%;
+    color: ${(props) => props.theme.main};
+    margin-bottom: 10px;
+    white-space: nowrap;
 
-    &:focus {
-        outline: ${(props) => props.theme.focus} 1px solid;
+    @media ${device.tablet} {
+        font-size: 12px;
+    }
+
+    @media ${device.laptop} {
+        font-size: 14px;
+    }
+`
+
+const BR = styled.br`
+    @media ${device.tablet} {
+        display: block;
+    }
+
+    @media ${device.laptop} {
+        display: none;
     }
 `
 

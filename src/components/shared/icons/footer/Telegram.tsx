@@ -1,8 +1,10 @@
 import React from 'react'
 import { FooterPath } from './FooterPath'
+import { device } from '../../../../styles/const'
+import { styled } from 'styled-components'
 
 export const Telegram = () => (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <SVG width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="iconmonstr-telegram-4 (1) 2" clipPath="url(#clip0_925_3332)">
             <FooterPath
                 id="telegram-4"
@@ -16,5 +18,21 @@ export const Telegram = () => (
                 <rect width="22" height="22" fill="white" />
             </clipPath>
         </defs>
-    </svg>
+    </SVG>
 )
+
+const SVG = styled.svg`
+    transition: 300ms all;
+
+    @media ${device.mobileS} {
+        transform: scale(1);
+    }
+
+    @media ${device.tablet} {
+        transform: scale(0.82);
+    }
+
+    @media ${device.laptop} {
+        transform: scale(1);
+    }
+`

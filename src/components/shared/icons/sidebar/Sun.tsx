@@ -1,8 +1,10 @@
 import React from 'react'
 import { SidebarPath } from './SidebarPath'
+import { styled } from 'styled-components'
+import { device } from '../../../../styles/const'
 
 export const Sun = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <SVG xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
         <g clipPath="url(#clip0_925_86)">
             <SidebarPath
                 fillRule="evenodd"
@@ -55,5 +57,17 @@ export const Sun = () => (
                 <rect width="26" height="26" fill="white" />
             </clipPath>
         </defs>
-    </svg>
+    </SVG>
 )
+
+const SVG = styled.svg`
+    transition: 300ms all;
+
+    @media ${device.tablet} {
+        transform: scale(0.77);
+    }
+
+    @media ${device.laptop} {
+        transform: scale(1);
+    }
+`
