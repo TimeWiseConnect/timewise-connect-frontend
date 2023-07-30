@@ -3,20 +3,26 @@
     "name": "TimeWise Connect",
     "icons": [
         {
-            "src": "/favicon-light.svg",
+            "src": "favicon-light.svg",
             "sizes": "any",
             "type": "image/svg+xml",
             "theme": "light"
         },
         {
-            "src": "/favicon-dark.svg",
+            "src": "favicon-dark.svg",
             "sizes": "any",
             "type": "image/svg+xml",
             "theme": "dark"
+        },
+        {
+            "src": "favicon.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "theme": "light"
         }
     ],
     "start_url": ".",
     "display": "standalone",
-    "theme_color": "#131720",
-    "background_color": "#131720"
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
 }
