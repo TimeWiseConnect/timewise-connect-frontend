@@ -2,6 +2,7 @@ import { useStore } from 'effector-react'
 import React from 'react'
 import { styled } from 'styled-components'
 import { $calendarStore, changeView, chooseDate } from '../../store/calendar'
+import { device } from '../../styles/const'
 
 export const ViewSelector = () => {
     const { view } = useStore($calendarStore)
@@ -18,7 +19,7 @@ export const ViewSelector = () => {
                     chooseDate(new Date())
                 }}
             >
-                30
+                {new Date().getDate()}
             </ReturnButton>
         </Layout>
     )
@@ -31,19 +32,52 @@ type Props = {
 const Layout = styled.div<Props>`
     display: flex;
     justify-content: space-between;
-    width: ${(props) => (props.$week ? '229px' : '200px')};
     margin-bottom: 20px;
     transition: 300ms all;
+
+    @media ${device.mobileS} {
+        width: ${(props) => (props.$week ? 'calc(100% / 2)' : '100%')};
+        margin-bottom: 16px;
+    }
+
+    @media ${device.tablet} {
+        width: ${(props) => (props.$week ? 'calc(100% / 4)' : 'calc(100% * 3 / 4 / 7 * 3)')};
+    }
+
+    @media ${device.laptop} {
+        width: ${(props) => (props.$week ? 'calc(100% / 5)' : '200px')};
+        margin-bottom: 20px;
+    }
+
+    @media ${device.laptopL} {
+        width: ${(props) => (props.$week ? 'calc(100% / 7)' : '200px')};
+    }
+
+    @media ${device.desktop} {
+        width: ${(props) => (props.$week ? 'calc(100% / 7)' : '200px')};
+    }
 `
 
 const Label = styled.label`
-    font-size: 13px;
-    padding: 6px 12px;
     background-color: transparent;
     outline: none;
     border: none;
     border-radius: 17px;
     cursor: pointer;
+
+    @media ${device.mobileS} {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+
+    @media ${device.tablet} {
+        font-size: 11px;
+    }
+
+    @media ${device.laptop} {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
 `
 const SwitchButton = styled.input`
     visibility: hidden;
@@ -57,10 +91,22 @@ const SwitchButton = styled.input`
 `
 
 const ReturnButton = styled.button`
-    font-size: 13px;
-    padding: 5px;
     background-color: transparent;
     color: ${(props) => props.theme.main};
     border: 1px solid ${(props) => props.theme.main};
     cursor: pointer;
+
+    @media ${device.mobileS} {
+        font-size: 10px;
+        padding: 3px;
+    }
+
+    @media ${device.tablet} {
+        font-size: 11px;
+    }
+
+    @media ${device.laptop} {
+        font-size: 13px;
+        padding: 5px;
+    }
 `

@@ -3,6 +3,7 @@ import { styled } from 'styled-components'
 import { areDatesEqual, formatDateNumber } from '../../utils/dateTimeUtils'
 import { $calendarStore, chooseDate } from '../../store/calendar'
 import { useStore } from 'effector-react'
+import { device } from '../../styles/const'
 
 type Props = {
     date: Date
@@ -15,6 +16,7 @@ export const Day = ({ date }: Props) => {
     const dateNumbers = dateString.split('.')
     const yesterday = new Date()
     yesterday.setDate(new Date().getDate() - 1)
+
     return (
         <Layout $isChecked={isChecked}>
             <SwitchButton
@@ -45,48 +47,130 @@ const Layout = styled.div<LayoutProps>`
     display: flex;
     flex-direction: column;
     justify-content: start;
-    border-bottom: 1px solid ${(props) => props.theme.accent2};
-    border-right: 1px solid ${(props) => props.theme.accent2};
     background-color: ${(props) => props.theme.bg};
-
-    ${(props) =>
-        props.$isChecked ? `z-index: 50; outline: 2px solid ${props.theme.accent2}; border: none !important;` : ``};
-
-    transition: 300ms background-color;
 `
 
 const Label = styled.label<LayoutProps>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: transparent;
     outline: none;
     border: none;
     cursor: pointer;
     width: 100%;
-    height: 149px;
-    font-size: 20px;
-    ${(props) => (props.$isChecked ? `padding: 10px;` : `padding: 40px 20px;`)};
-    transition: 300ms all;
+    height: 100%;
+    user-select: none;
+    transition: 200ms all;
+    outline: 1px solid ${(props) => props.theme.accent2};
+    @media ${device.mobileS} {
+        font-size: 12px;
+        ${(props) => (props.$isChecked ? `padding: 10px;` : `padding: 13px 10px;`)};
+    }
+
+    @media ${device.tablet} {
+        font-size: 16px;
+        ${(props) => (props.$isChecked ? `padding: 10px;` : `padding: 14px;`)};
+    }
+
+    @media ${device.laptop} {
+        font-size: 20px;
+        ${(props) => (props.$isChecked ? `padding: 10px;` : `padding: 40px 20px;`)};
+    }
+
+    @media ${device.laptopL} {
+        ${(props) => (props.$isChecked ? `padding: 10px;` : `padding: 40px 20px;`)};
+    }
 `
 
 const Month = styled.span`
-    font-size: 14px;
+    @media ${device.mobileS} {
+        font-size: 8px;
+    }
+
+    @media ${device.tablet} {
+        font-size: 12px;
+    }
+
+    @media ${device.laptop} {
+        font-size: 13px;
+    }
+
+    @media ${device.laptopL} {
+        font-size: 14px;
+    }
 `
 
-const Upper = styled.span``
+const Upper = styled.span`
+    display: flex;
+    @media ${device.mobileS} {
+        justify-content: center;
+        align-items: end;
+    }
+
+    @media ${device.tablet} {
+        justify-content: start;
+    }
+`
 
 const Lower = styled.span`
     display: flex;
-    justify-content: end;
-    align-items: end;
+    @media ${device.mobileS} {
+        justify-content: center;
+        align-items: end;
+    }
+
+    @media ${device.tablet} {
+        justify-content: end;
+    }
 `
 
 const SwitchButton = styled.input`
     visibility: hidden;
     height: 0;
     width: 0;
+
+    &:checked + ${Label} {
+        outline: 2px solid ${(props) => props.theme.accent2};
+        z-index: 2;
+        background-color: ${(props) => props.theme.bg};
+    }
+
+    &:checked + ${Label} > ${Upper} {
+        justify-content: start;
+    }
+
+    &:checked + ${Label} > ${Lower} {
+        justify-content: end;
+        align-items: end;
+    }
+
+    &:disabled + ${Label} {
+        background-color: ${(props) => props.theme.disable};
+        color: ${(props) => props.theme.gray};
+        outline: none;
+        border: none !important;
+        cursor: default;
+    }
+
+    &:disabled + ${Layout} {
+        outline: none;
+    }
 `
+
 const Text = styled.p`
-    font-size: 13px;
+    @media ${device.mobileS} {
+        font-size: 6px;
+    }
+
+    @media ${device.mobileM} {
+        font-size: 8px;
+    }
+
+    @media ${device.tablet} {
+        font-size: 10px;
+    }
+
+    @media ${device.laptop} {
+        font-size: 13px;
+    }
 `

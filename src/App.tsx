@@ -69,6 +69,7 @@ const Wrapper = styled.div`
 
 const Layout = styled.div`
     display: flex;
+    width: 100%;
     background-color: ${(props) => props.theme.bg};
     transition: 300ms background-color;
     flex-grow: 1;

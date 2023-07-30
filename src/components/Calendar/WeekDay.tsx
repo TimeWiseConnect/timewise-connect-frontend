@@ -3,6 +3,7 @@ import { styled } from 'styled-components'
 import { areDatesEqual, formatDateWord } from '../../utils/dateTimeUtils'
 import { $calendarStore, chooseDate } from '../../store/calendar'
 import { useStore } from 'effector-react'
+import { device } from '../../styles/const'
 
 type Props = {
     date: Date
@@ -32,7 +33,18 @@ const Layout = styled.div<LayoutProps>`
             : ''}
     display: flex;
     width: 100%;
-    height: 84px;
+
+    @media ${device.mobileS} {
+        height: 50px;
+    }
+
+    @media ${device.tablet} {
+        height: 66px;
+    }
+
+    @media ${device.laptop} {
+        height: 84px;
+    }
 `
 
 const Label = styled.label`
@@ -44,8 +56,22 @@ const Label = styled.label`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 30px 20px;
-    font-size: 20px;
+    user-select: none;
+
+    @media ${device.mobileS} {
+        font-size: 12px;
+        padding: 16px 20px;
+    }
+
+    @media ${device.tablet} {
+        font-size: 16px;
+        padding: 24px 20px;
+    }
+
+    @media ${device.laptop} {
+        font-size: 20px;
+        padding: 30px 20px;
+    }
 `
 const SwitchButton = styled.input`
     visibility: hidden;
@@ -53,5 +79,15 @@ const SwitchButton = styled.input`
     width: 0;
 `
 const Text = styled.p`
-    font-size: 13px;
+    @media ${device.mobileS} {
+        font-size: 8px;
+    }
+
+    @media ${device.tablet} {
+        font-size: 11px;
+    }
+
+    @media ${device.laptop} {
+        font-size: 13px;
+    }
 `

@@ -9,6 +9,7 @@ export const FooterLayout = styled.div`
     color: ${(props) => props.theme.footerMain};
     line-height: 130%;
     transition: 300ms background-color;
+    z-index: 5;
 
     @media ${device.mobileS} {
         flex-direction: column;

@@ -53,12 +53,15 @@ export const LogIn = () => {
 }
 
 const Layout = styled.div`
+    z-index: 100;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
     width: 100%;
     color: ${(props) => props.theme.main};
+    background-color: ${(props) => props.theme.mobileBg};
 `
 const SideBar = styled.div`
     display: flex;

@@ -77,12 +77,14 @@ type SidebarProps = {
 const animationSpeed = '500ms'
 
 const SidebarLayout = styled.div<SidebarProps>`
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
+    height: calc(100% - 40px);
     background-color: ${(props) => props.theme.bg};
     color: ${(props) => props.theme.main};
     border-left: 1px solid ${(props) => props.theme.lightGray};

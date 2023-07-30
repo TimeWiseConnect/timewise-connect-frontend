@@ -3,6 +3,7 @@ import { styled } from 'styled-components'
 import { Day } from './WeekDay'
 import { useStore } from 'effector-react'
 import { $calendarStore } from '../../store/calendar'
+import { device } from '../../styles/const'
 
 const WeekView = () => {
     const { startDate } = useStore($calendarStore)
@@ -28,9 +29,27 @@ const WeekView = () => {
 export default WeekView
 
 const Layout = styled.div`
-    width: 229px;
-
     & > *:not(:last-child) {
         border-bottom: 1px solid ${(props) => props.theme.accent2};
+    }
+
+    @media ${device.mobileS} {
+        width: calc(100% / 2);
+    }
+
+    @media ${device.tablet} {
+        width: calc(100% / 4);
+    }
+
+    @media ${device.laptop} {
+        width: calc(100% / 5);
+    }
+
+    @media ${device.laptopL} {
+        width: calc(100% / 7);
+    }
+
+    @media ${device.desktop} {
+        width: calc(100% / 7);
     }
 `
