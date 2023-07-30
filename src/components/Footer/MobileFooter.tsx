@@ -1,5 +1,5 @@
 import React from 'react'
-import { AnchorCentered, ContactsSection, FooterLayout, MessengersLinks, PhoneLinks } from '../../styles/Footer'
+import { AnchorCentered, FooterLayout, PhoneLinks } from '../../styles/Footer'
 import { WhatsApp } from '../shared/icons/footer/WhatsApp'
 import { Telegram } from '../shared/icons/footer/Telegram'
 import { Phone } from '../shared/icons/footer/Phone'

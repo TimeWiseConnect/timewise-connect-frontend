@@ -3,9 +3,7 @@ import { styled } from 'styled-components'
 import { PhoneInput } from '../shared/PhoneInput'
 import { Link } from '../../styles/Link'
 import { Button } from '../../styles/Button'
-import { Moon } from '../shared/icons/sidebar/Moon'
 import ThemeSwitch from '../shared/ThemeSwitch'
-import { Footer } from '../Footer/Footer'
 import { MobileFooter } from '../Footer/MobileFooter'
 
 export const LogIn = () => {

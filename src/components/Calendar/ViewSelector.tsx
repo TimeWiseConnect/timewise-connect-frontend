@@ -36,7 +36,7 @@ const Layout = styled.div<Props>`
     transition: 300ms all;
 
     @media ${device.mobileS} {
-        width: ${(props) => (props.$week ? 'calc(100% / 2)' : '100%')};
+        width: ${(props) => (props.$week ? 'calc((100% - 16px) / 2)' : '100%')};
         margin-bottom: 16px;
     }
 
@@ -79,6 +79,7 @@ const Label = styled.label`
         padding: 6px 12px;
     }
 `
+
 const SwitchButton = styled.input`
     visibility: hidden;
     height: 0;

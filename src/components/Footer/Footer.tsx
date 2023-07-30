@@ -1,6 +1,4 @@
 import React from 'react'
-import { styled } from 'styled-components'
-import { device } from '../../styles/const'
 import { Phone } from '../shared/icons/footer/Phone'
 import { WhatsApp } from '../shared/icons/footer/WhatsApp'
 import { Telegram } from '../shared/icons/footer/Telegram'

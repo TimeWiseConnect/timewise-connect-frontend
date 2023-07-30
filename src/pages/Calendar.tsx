@@ -1,15 +1,27 @@
 import React from 'react'
 import { ViewSelector } from '../components/Calendar/ViewSelector'
 import { styled } from 'styled-components'
-import { DateSelector } from '../components/Calendar/DateSelector'
 import { device } from '../styles/const'
+import { TimeSelector } from '../components/Calendar/TimeSelector'
+import WeekView from '../components/Calendar/WeekView'
+import { MonthView } from '../components/Calendar/MonthView'
+import { useStore } from 'effector-react'
+import { $calendarStore, SwitcherType } from '../store/calendar'
 
 export const Calendar = () => {
+    const { view } = useStore($calendarStore)
     return (
         <Layout>
-            <Header>Для записи к педагогу выберите дату и время</Header>
+            <Header>
+                Для записи к{'\u00A0'}педагогу выберите дату и{'\u00A0'}время
+            </Header>
             <ViewSelector />
-            <DateSelector />
+            <Container $view={view}>
+                <>
+                    {view === 'week' ? <WeekView /> : <MonthView />}
+                    <TimeSelector />
+                </>
+            </Container>
         </Layout>
     )
 }
@@ -41,7 +53,7 @@ const Layout = styled.div`
 
 const Header = styled.h1`
     color: ${(props) => props.theme.main};
-
+    font-weight: 400;
     @media ${device.mobileS} {
         font-size: 14px;
         margin-bottom: 30px;
@@ -54,5 +66,27 @@ const Header = styled.h1`
 
     @media ${device.laptop} {
         font-size: 26px;
+    }
+`
+
+type Props = {
+    $view: SwitcherType
+}
+
+const Container = styled.div<Props>`
+    @media ${device.mobileS} {
+        ${(props) =>
+            props.$view === 'week'
+                ? `
+    display: flex;
+    width: 100%;
+    gap: 16px;`
+                : ``}
+    }
+
+    @media ${device.tablet} {
+        display: flex;
+        width: 100%;
+        gap: 16px;
     }
 `

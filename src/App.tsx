@@ -40,7 +40,7 @@ export const App: FC = () => {
                         {width >= 768 ? <Footer /> : null}
                     </Wrapper>
                 ) : (
-                    <Layout>Loading</Layout>
+                    <Layout></Layout>
                 )}
             </Theme>
         </>
@@ -58,6 +58,17 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     margin: 0;
     }
+    @media (prefers-color-scheme: light) {
+  html {
+    background-color: #FFFFFF;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #131720;
+  }
+}
 `
 
 const Wrapper = styled.div`

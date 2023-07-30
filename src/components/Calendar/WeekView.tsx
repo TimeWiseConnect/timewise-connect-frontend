@@ -9,9 +9,9 @@ const WeekView = () => {
     const { startDate } = useStore($calendarStore)
     const daysInWeek = 7
 
-    const year = startDate.getUTCFullYear()
-    const month = startDate.getUTCMonth()
-    const date = startDate.getUTCDate()
+    const year = startDate.getFullYear()
+    const month = startDate.getMonth()
+    const date = startDate.getDate()
 
     const days: Date[] = Array(7)
     for (let day = 0; day < daysInWeek; day++) {
@@ -34,7 +34,7 @@ const Layout = styled.div`
     }
 
     @media ${device.mobileS} {
-        width: calc(100% / 2);
+        width: calc((100% - 16px) / 2);
     }
 
     @media ${device.tablet} {

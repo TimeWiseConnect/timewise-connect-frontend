@@ -1,21 +1,24 @@
 {
-    "short_name": "React App",
-    "name": "Create React App Sample",
+    "short_name": "TWC",
+    "name": "TimeWise Connect",
     "icons": [
         {
-            "src": "favicon.ico",
-            "sizes": "64x64 32x32 24x24 16x16",
-            "type": "image/x-icon"
+            "src": "favicon-light.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "theme": "light"
         },
         {
-            "src": "logo192.png",
-            "type": "image/png",
-            "sizes": "192x192"
+            "src": "favicon-dark.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "theme": "dark"
         },
         {
-            "src": "logo512.png",
+            "src": "favicon.png",
+            "sizes": "144x144",
             "type": "image/png",
-            "sizes": "512x512"
+            "theme": "light"
         }
     ],
     "start_url": ".",

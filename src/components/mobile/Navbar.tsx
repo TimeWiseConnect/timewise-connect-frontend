@@ -1,5 +1,5 @@
-import { useStore } from 'effector-react'
 import React from 'react'
+import { useStore } from 'effector-react'
 import { styled } from 'styled-components'
 import { $isAuth } from '../../store/auth'
 import { Hamburger } from '../shared/icons/mobile/Hamburger'
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const Navbar = ({ setIsCollapsed, isCollapsed }: Props) => {
-    const { isAuthenticated, currentUser } = useStore($isAuth)
+    const { isAuthenticated } = useStore($isAuth)
     return (
         <NavbarLayout>
             <LogoContainer>

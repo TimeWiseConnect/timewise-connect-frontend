@@ -9,6 +9,10 @@ export const areDatesEqual = (date1: Date, date2: Date): boolean => {
     return date1WithoutTime.getTime() === date2WithoutTime.getTime()
 }
 
+export const isTimeEqual = (date1: Date, date2: Date): boolean => {
+    return date1.getTime() === date2.getTime()
+}
+
 export const formatDateWord = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' }
     return date.toLocaleDateString('ru-RU', options)
@@ -17,4 +21,10 @@ export const formatDateWord = (date: Date) => {
 export const formatDateNumber = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'numeric' }
     return date.toLocaleDateString('ru-RU', options)
+}
+
+export const getTimeFromDate = (date: Date) => {
+    const hours = date.getHours().toString().padStart(2, '0')
+    const minutes = date.getMinutes().toString().padStart(2, '0')
+    return `${hours}:${minutes}`
 }

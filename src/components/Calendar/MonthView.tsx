@@ -4,7 +4,6 @@ import { Day } from './MonthDay'
 import { useStore } from 'effector-react'
 import { $calendarStore } from '../../store/calendar'
 import { device } from '../../styles/const'
-import { getDaysInMonth } from '../../utils/dateTimeUtils'
 
 export const MonthView = () => {
     const { startDate } = useStore($calendarStore)

@@ -1,5 +1,5 @@
-import { useStore } from 'effector-react'
 import React, { useState } from 'react'
+import { useStore } from 'effector-react'
 import { $isAuth, logOut } from '../../store/auth'
 import { styled } from 'styled-components'
 import { Logo } from '../shared/icons/sidebar/Logo'
@@ -77,14 +77,15 @@ type SidebarProps = {
 const animationSpeed = '500ms'
 
 const SidebarLayout = styled.div<SidebarProps>`
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex-grow: 1;
     align-items: center;
-    height: calc(100% - 40px);
+    height: 100vh;
     background-color: ${(props) => props.theme.bg};
     color: ${(props) => props.theme.main};
     border-left: 1px solid ${(props) => props.theme.lightGray};
@@ -94,11 +95,11 @@ const SidebarLayout = styled.div<SidebarProps>`
         300ms background-color;
 
     @media ${device.tablet} {
-        width: ${(props) => (props.$isCollapsed ? '75px' : '180px')};
+        width: ${(props) => (props.$isCollapsed ? '60px' : '180px')};
     }
 
     @media ${device.laptop} {
-        width: ${(props) => (props.$isCollapsed ? '100px' : '328px')};
+        width: ${(props) => (props.$isCollapsed ? '75px' : '328px')};
     }
 `
 
@@ -199,11 +200,11 @@ const ChangeWidthButton = styled(InvisibleButton)<SidebarProps>`
     ${(props) => (props.$isCollapsed ? '' : 'rotate: 180deg;')}
 
     @media ${device.tablet} {
-        right: calc(${(props) => (props.$isCollapsed ? '75px' : '180px')} - 13px);
+        right: calc(${(props) => (props.$isCollapsed ? '60px' : '180px')} - 13px);
     }
 
     @media ${device.laptop} {
-        right: calc(${(props) => (props.$isCollapsed ? '100px' : '328px')} - 13px);
+        right: calc(${(props) => (props.$isCollapsed ? '75px' : '328px')} - 13px);
     }
 `
 
