@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { Day } from './Day'
+import { Day } from './WeekDay'
 import { useStore } from 'effector-react'
 import { $calendarStore } from '../../store/calendar'
 
@@ -19,9 +19,7 @@ const WeekView = () => {
     return (
         <Layout>
             {days.map((day) => (
-                <>
-                    <Day key={day.toISOString()} date={day} />
-                </>
+                <Day key={day.toISOString()} date={day} />
             ))}
         </Layout>
     )

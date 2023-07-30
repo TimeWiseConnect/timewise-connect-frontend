@@ -1,28 +1,39 @@
 import { useStore } from 'effector-react'
 import React from 'react'
 import { styled } from 'styled-components'
-import { $calendarStore, changeView } from '../../store/calendar'
+import { $calendarStore, changeView, chooseDate } from '../../store/calendar'
 
 export const ViewSelector = () => {
     const { view } = useStore($calendarStore)
     return (
-        <Layout>
+        <Layout $week={view === 'week'}>
             <div>
                 <SwitchButton onChange={() => changeView('week')} id="week" type="radio" checked={view === 'week'} />
                 <Label htmlFor="week">Неделя</Label>
                 <SwitchButton onChange={() => changeView('month')} id="month" type="radio" checked={view === 'month'} />
                 <Label htmlFor="month">Месяц</Label>
             </div>
-            <ReturnButton>30</ReturnButton>
+            <ReturnButton
+                onClick={() => {
+                    chooseDate(new Date())
+                }}
+            >
+                30
+            </ReturnButton>
         </Layout>
     )
 }
 
-const Layout = styled.div`
+type Props = {
+    $week: boolean
+}
+
+const Layout = styled.div<Props>`
     display: flex;
     justify-content: space-between;
-    width: 229px;
+    width: ${(props) => (props.$week ? '229px' : '200px')};
     margin-bottom: 20px;
+    transition: 300ms all;
 `
 
 const Label = styled.label`
