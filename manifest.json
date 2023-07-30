@@ -15,7 +15,7 @@
             "theme": "dark"
         }
     ],
-    "start_url": "/timewise-connect-frontend/",
+    "start_url": ".",
     "display": "standalone",
     "theme_color": "#131720",
     "background_color": "#131720"
