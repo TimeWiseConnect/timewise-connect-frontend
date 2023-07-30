@@ -3,15 +3,17 @@ import { createGlobalStyle, styled } from 'styled-components'
 import { useStore, useEvent } from 'effector-react'
 import { checkAuthFx } from './api/auth/auth'
 import { $isAuth, setLoadingFalse } from './store/auth'
-import Theme from './components/Theme'
 import Sidebar from './components/Sidebar/Sidebar'
 import { changeTheme, theme } from './store/theme'
 import useWindowDimensions from './utils/useWindowDimensions'
 import useRemoveFocusWhenNotTab from './utils/useRemoveFocusWhenNotTab'
 import Mobile from './components/mobile/Mobile'
 import { Footer } from './components/Footer/Footer'
+import AppRouter from './router/AppRouter'
+import { Theme } from './components/Theme'
+import { device } from './styles/const'
 
-const App: FC = () => {
+export const App: FC = () => {
     const { width } = useWindowDimensions()
     useRemoveFocusWhenNotTab()
     useEffect(() => {
@@ -32,7 +34,7 @@ const App: FC = () => {
                 {!isLoading ? (
                     <Wrapper>
                         <Layout>
-                            {/* <AppRouter /> */}
+                            <AppRouter />
                             {width >= 768 ? <Sidebar /> : <Mobile />}
                         </Layout>
                         {width >= 768 ? <Footer /> : null}
@@ -67,11 +69,17 @@ const Wrapper = styled.div`
 
 const Layout = styled.div`
     display: flex;
-    justify-content: end;
-    align-items: center;
     background-color: ${(props) => props.theme.bg};
     transition: 300ms background-color;
     flex-grow: 1;
-`
 
-export default App
+    @media ${device.mobileS} {
+        flex-direction: column-reverse;
+        justify-content: start;
+    }
+
+    @media ${device.tablet} {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+`

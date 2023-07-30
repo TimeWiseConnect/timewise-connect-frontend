@@ -26,23 +26,23 @@ export const FooterLayout = styled.div`
         flex-direction: row;
         background-color: ${(props) => props.theme.footerBg};
         padding: 0px 75px;
-        height: 33px;
+        min-height: 33px;
         display: flex;
     }
 
     @media ${device.laptop} {
         font-size: 12px;
-        height: 36px;
+        min-height: 36px;
         padding: 0px 30px;
     }
 
     @media ${device.laptopL} {
-        height: 40px;
+        min-height: 40px;
         padding: 0px 100px;
     }
 
     @media ${device.desktop} {
-        height: 40px;
+        min-height: 40px;
         padding: 0px 328px;
     }
 `

@@ -5,13 +5,15 @@ export const Link = styled.a`
     color: ${(props) => props.theme.link};
     text-decoration: none;
 
-    &:hover {
-        color: ${(props) => props.theme.linkHover};
-    }
+    @media (hover: hover) {
+        &:hover {
+            color: ${(props) => props.theme.linkHover};
+        }
 
-    &:focus {
-        outline: ${(props) => props.theme.main} 1px solid;
-        border-radius: 3px;
+        &:focus {
+            outline: ${(props) => props.theme.main} 1px solid;
+            border-radius: 3px;
+        }
     }
 
     &:active {

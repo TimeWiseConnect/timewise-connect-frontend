@@ -15,15 +15,11 @@ export const PhoneInput = ({ value, setValue, ...otherProps }: Props) => {
     const changeHandler = (pureValue: string, oldValue: string) => {
         value = pureValue.slice(0, 18)
         const last = pureValue.slice(-1).replaceAll(/[^0-9()\-]/g, '')
-        console.log(last)
-        console.log(pureValue)
-        console.log(pureValue.replaceAll(/[^0-9)\-\s\+]/g, ''))
         if (value.startsWith('+7')) {
             value = value.slice(2).replaceAll(/\D/g, '')
         } else {
             value = value.replaceAll(/\D/g, '')
         }
-        console.log(value.length < 10)
         if (last && value.length < 10 && value === oldValue) value = value.slice(0, value.length - 1)
         setValue(value)
 

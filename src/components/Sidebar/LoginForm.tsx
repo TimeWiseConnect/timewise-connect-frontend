@@ -49,6 +49,7 @@ type SidebarProps = {
 const LoginFormLayout = styled.form<SidebarProps>`
     width: 100%;
     opacity: ${(props) => (props.$isCollapsed ? '0' : '1')};
+    ${(props) => (props.$isCollapsed ? 'visibility: hidden;' : '')};
     font-family: Golos Text;
     display: flex;
     align-self: flex-start;

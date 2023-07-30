@@ -38,7 +38,7 @@ type Props = {
     children: React.ReactNode
 }
 
-const Theme = ({ children }: Props) => {
+export const Theme = ({ children }: Props) => {
     const theme = useStore($themeStore)
     const colors: ColorTheme =
         theme === 'light'
@@ -102,5 +102,3 @@ const Theme = ({ children }: Props) => {
               }
     return <ThemeProvider theme={colors}>{children}</ThemeProvider>
 }
-
-export default Theme

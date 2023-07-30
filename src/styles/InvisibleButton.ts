@@ -19,19 +19,21 @@ export const InvisibleButton = styled.button`
         fill: ${(props) => props.theme.main};
     }
 
-    &:focus {
-        outline: ${(props) => props.theme.main} 1px solid;
-        border-radius: 3px;
-    }
-    &:focus ${Text}, &:focus ${SidebarPath} {
-        color: ${(props) => props.theme.accent1};
-        fill: ${(props) => props.theme.accent1};
-    }
+    @media (hover: hover) {
+        &:hover,
+        &:hover ${Text},&:hover ${SidebarPath} {
+            color: ${(props) => props.theme.accent1};
+            fill: ${(props) => props.theme.accent1};
+        }
 
-    &:hover,
-    &:hover ${Text},&:hover ${SidebarPath} {
-        color: ${(props) => props.theme.accent1};
-        fill: ${(props) => props.theme.accent1};
+        &:focus {
+            outline: ${(props) => props.theme.main} 1px solid;
+            border-radius: 3px;
+        }
+        &:focus ${Text}, &:focus ${SidebarPath} {
+            color: ${(props) => props.theme.accent1};
+            fill: ${(props) => props.theme.accent1};
+        }
     }
 
     &:active,
