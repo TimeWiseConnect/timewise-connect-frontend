@@ -128,6 +128,7 @@ const SwitchButton = styled.input`
     visibility: hidden;
     height: 0;
     width: 0;
+    z-index: 1;
 
     &:checked + ${Label} {
         outline: 2px solid ${(props) => props.theme.accent2};

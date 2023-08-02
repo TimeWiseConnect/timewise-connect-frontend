@@ -8,9 +8,11 @@ export type Calendar = {
     startDate: Date
 }
 
+const today = new Date()
+
 const DEFAULT_STORE: Calendar = {
     view: (localStorage.getItem('view') as SwitcherType) || 'week',
-    choosenDate: new Date(),
+    choosenDate: new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()),
     startDate: new Date(),
 }
 

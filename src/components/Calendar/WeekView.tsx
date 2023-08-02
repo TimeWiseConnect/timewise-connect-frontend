@@ -46,10 +46,6 @@ const Layout = styled.div`
     }
 
     @media ${device.laptopL} {
-        width: calc(100% / 7);
-    }
-
-    @media ${device.desktop} {
-        width: calc(100% / 7);
+        width: calc(100% / 2);
     }
 `

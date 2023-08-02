@@ -13,6 +13,7 @@ export const InvisibleButton = styled.button`
     color: ${(props) => props.theme.main};
     line-height: 130%;
     margin: 1px;
+    z-index: 5;
 
     ${Text}, ${SidebarPath} {
         color: ${(props) => props.theme.main};

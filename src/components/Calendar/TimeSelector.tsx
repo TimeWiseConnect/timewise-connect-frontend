@@ -95,9 +95,7 @@ const Layout = styled.div<Props>`
     }
 
     @media ${device.laptopL} {
-    }
-
-    @media ${device.desktop} {
+        width: ${(props) => (props.$view === 'week' ? 'calc(100% / 2)' : 'calc((100% - 16px) / 4)')};
     }
 `
 

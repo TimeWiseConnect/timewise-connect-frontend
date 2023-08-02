@@ -41,7 +41,7 @@ const Layout = styled.div<Props>`
     }
 
     @media ${device.tablet} {
-        width: ${(props) => (props.$week ? 'calc(100% / 4)' : 'calc(100% * 3 / 4 / 7 * 3)')};
+        width: ${(props) => (props.$week ? 'calc(100% / 4)' : 'calc((100% - 16px) * 3 / 4)')};
     }
 
     @media ${device.laptop} {
