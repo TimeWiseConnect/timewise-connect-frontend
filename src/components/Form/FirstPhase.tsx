@@ -7,6 +7,7 @@ import { device } from '../../styles/const'
 import { $formStore, nextPhase, setAuthor } from '../../store/form'
 import { CheckButton } from '../shared/CheckButton'
 import { Arrow } from '../shared/icons/Arrow'
+import { FormButton } from '../../styles/FormButton'
 
 export const FirstPhase = () => {
     const { choosenDate } = useStore($calendarStore)
@@ -37,14 +38,14 @@ export const FirstPhase = () => {
                 />
                 <CheckButton checked={author === 'child'} />
             </Label>
-            <Button
+            <FormButton
                 onClick={() => {
                     nextPhase()
                 }}
             >
                 Дальше
                 <Arrow />
-            </Button>
+            </FormButton>
         </Layout>
     )
 }
@@ -67,7 +68,7 @@ const Header = styled.h2`
     }
 
     @media ${device.laptop} {
-        font-size: 26px;
+        font-size: 22px;
     }
 `
 
@@ -87,7 +88,7 @@ const Question = styled.h3`
     }
 
     @media ${device.laptop} {
-        font-size: 22px;
+        font-size: 16px;
     }
 `
 
@@ -142,33 +143,5 @@ const Label = styled.label<Props>`
     &:checked {
         border: 1px solid red;
         font-size: 16px;
-    }
-`
-
-const Button = styled.button`
-    cursor: pointer;
-    align-self: end;
-    display: flex;
-    align-items: center;
-    background-color: ${(props) => props.theme.accent1};
-    border: none;
-    border-radius: 5.333px;
-
-    @media ${device.mobileS} {
-        padding: 10px;
-        margin-top: 30px;
-        gap: 30px;
-    }
-
-    @media ${device.tablet} {
-        padding: 10px 15px;
-        margin-top: 20px;
-        gap: 33px;
-    }
-
-    @media ${device.laptop} {
-        padding: 17px 30px;
-        margin-top: 60px;
-        gap: 38px;
     }
 `
