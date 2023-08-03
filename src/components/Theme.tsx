@@ -65,7 +65,7 @@ export const Theme = ({ children }: Props) => {
                   focus: '#FFCDD7',
 
                   buttonText: '#0F1523',
-                  buttonDisable: '#494F58',
+                  buttonDisable: '#E8EAEE',
                   buttonOutlineText: '#C3C3C3',
                   buttonReset: '#0F1523',
                   error: '#E23131',

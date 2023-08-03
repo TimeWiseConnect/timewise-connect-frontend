@@ -42,7 +42,6 @@ export const ThirdPhase = () => {
                     <Label htmlFor="messenger">мессенджер</Label>
                 </Option>
             </OptionList>
-            <>{console.log(phone)}</>
             <PhoneInput setValue={setPhone} value={phone} placeholder="Ваш номер*" isInForm={true} />
             <TextArea placeholder="Комментарий" value={comment} onChange={(e) => setComment(e.target.value)} />
             <Buttons>

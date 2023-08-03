@@ -45,10 +45,23 @@ const Header = styled.h2`
     font-size: 22px;
     font-weight: 400;
     margin-bottom: 40px;
+    text-align: center;
 `
 
 const Button = styled(FormButton)`
     align-self: center;
+
+    @media ${device.mobileS} {
+        padding: 10px 31.5px;
+    }
+
+    @media ${device.tablet} {
+        padding: 10px 41px;
+    }
+
+    @media ${device.laptop} {
+        padding: 17px 65.5px;
+    }
 `
 
 const Text = styled(MainText)`

@@ -20,7 +20,9 @@ export const Calendar = () => {
     const date = startDate.getUTCDate()
     return (
         <Layout>
-            <Header>Для записи к{'\u00A0'}педагогу выберите дату и время</Header>
+            <Header>
+                Для записи к{'\u00A0'}педагогу выберите дату и{'\u00A0'}время
+            </Header>
             <Row $view={view}>
                 <ViewSelector />
                 {view === 'month' && (
