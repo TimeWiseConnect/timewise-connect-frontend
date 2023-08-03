@@ -25,6 +25,7 @@ type ColorTheme = {
     focus: string
 
     buttonText: string
+    buttonDisable: string
     buttonOutlineText: string
     buttonReset: string
     error: string
@@ -64,6 +65,7 @@ export const Theme = ({ children }: Props) => {
                   focus: '#FFCDD7',
 
                   buttonText: '#0F1523',
+                  buttonDisable: '#494F58',
                   buttonOutlineText: '#C3C3C3',
                   buttonReset: '#0F1523',
                   error: '#E23131',
@@ -85,7 +87,7 @@ export const Theme = ({ children }: Props) => {
                   accent4: '#B6465B',
                   footerBg: '#0E121A',
                   footerMain: '#6C7178',
-                  disable: '#494F58',
+                  disable: '#0E1118',
                   form: '#181C26',
                   link: '#DBADB6',
                   linkHover: '#BF7281',
@@ -93,6 +95,7 @@ export const Theme = ({ children }: Props) => {
                   focus: '#BF7281',
 
                   buttonText: '#181C26',
+                  buttonDisable: '#494F58',
                   buttonOutlineText: '#181C26',
                   buttonReset: '#DBADB6',
                   error: '#BF7281',

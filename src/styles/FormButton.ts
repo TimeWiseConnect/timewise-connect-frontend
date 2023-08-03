@@ -12,7 +12,7 @@ export const FormButton = styled.button`
     color: ${(props) => props.theme.buttonText};
 
     &:disabled {
-        background-color: ${(props) => props.theme.disable};
+        background-color: ${(props) => props.theme.buttonDisable};
         cursor: default;
     }
 
