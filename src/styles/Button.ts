@@ -24,6 +24,11 @@ export const Button = styled.button`
         background-color: ${(props) => props.theme.accent4};
     }
 
+    &:disabled {
+        background-color: ${(props) => props.theme.buttonDisable};
+        cursor: default;
+    }
+
     @media ${device.mobileS} {
         font-size: 14px;
         padding: 16px 110px;

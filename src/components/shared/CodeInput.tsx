@@ -9,15 +9,13 @@ type Props = {
 export const CodeInput = ({ value, setValue }: Props) => {
     const changeHandler = (value: string) => {
         value = value.replaceAll(/\D/g, '')
-        if (value?.length > 4) {
-            return
-        }
         setValue(value)
     }
 
     return (
         <Input
             value={value}
+            maxLength={4}
             onChange={(e) => changeHandler(e.target.value)}
             placeholder="Введите последние 4 цифры номера"
         />

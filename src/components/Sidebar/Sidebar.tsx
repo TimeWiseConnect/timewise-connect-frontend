@@ -1,35 +1,37 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useStore } from 'effector-react'
-import { $isAuth, logOut } from '../../store/auth'
+import { $authStore, logOut } from '../../store/auth'
 import { styled } from 'styled-components'
 import { Logo } from '../shared/icons/sidebar/Logo'
 import { SideButton } from '../shared/icons/sidebar/SideButton'
 import { TWC } from '../shared/icons/sidebar/TWC'
-import LoginForm from './LoginForm'
-import { device } from '../../styles/const'
 import { InvisibleButton } from '../../styles/InvisibleButton'
 import { Text } from '../../styles/Text'
 import ThemeSwitch from '../shared/ThemeSwitch'
+import { LoginForm } from './LoginForm'
+import { device } from '../../styles/const'
+import { $sidebarStore, changeSidebarStatus } from '../../store/sidebar'
+import { LogOut } from '../shared/icons/sidebar/LogOut'
 
 const Sidebar = () => {
-    const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
-    const { isAuthenticated, currentUser } = useStore($isAuth)
+    const collapsed = useStore($sidebarStore) === 'closed'
+    const { isAuthenticated, currentUser } = useStore($authStore)
     return (
-        <SidebarLayout $isCollapsed={isCollapsed}>
+        <SidebarLayout $isCollapsed={collapsed}>
             <ChangeWidthButton
-                $isCollapsed={isCollapsed}
+                $isCollapsed={collapsed}
                 onClick={() => {
-                    setIsCollapsed(!isCollapsed)
+                    changeSidebarStatus(collapsed ? 'open' : 'closed')
                 }}
             >
                 <SideButton />
             </ChangeWidthButton>
-            <SidebarHeader $isCollapsed={isCollapsed}>
-                <HeaderContainer $isCollapsed={isCollapsed}>
-                    <LogoContainer $isCollapsed={isCollapsed}>
+            <SidebarHeader $isCollapsed={collapsed}>
+                <HeaderContainer $isCollapsed={collapsed}>
+                    <LogoContainer $isCollapsed={collapsed}>
                         <Logo isCollapsed />
-                        {isCollapsed && <TWC />}
-                        {!isCollapsed && (
+                        {collapsed && <TWC />}
+                        {!collapsed && (
                             <Text>
                                 TimeWise
                                 <br />
@@ -40,29 +42,28 @@ const Sidebar = () => {
                 </HeaderContainer>
                 {isAuthenticated ? (
                     <div>
-                        AVATAR
                         <Text>{currentUser?.name}</Text>
                     </div>
                 ) : (
                     <ChangelingButton
                         onClick={() => {
-                            setIsCollapsed(!isCollapsed)
+                            changeSidebarStatus('open')
                         }}
-                        disabled={!isCollapsed}
-                        $isCollapsed={isCollapsed}
+                        disabled={!collapsed}
+                        $isCollapsed={collapsed}
                     >
                         Войти
                     </ChangelingButton>
                 )}
-                <LoginForm isCollapsed={isCollapsed} />
+                <LoginForm />
             </SidebarHeader>
-            <SidebarFooter $isCollapsed={isCollapsed}>
-                <FooterContainer $isCollapsed={isCollapsed}>
-                    <ThemeSwitch isCollapsed={isCollapsed} />
+            <SidebarFooter $isCollapsed={collapsed}>
+                <FooterContainer $isCollapsed={collapsed}>
+                    <ThemeSwitch isCollapsed={collapsed} />
                     {isAuthenticated && (
-                        <div onClick={() => logOut()}>
-                            (isCollapsed ? <Text>ВЫЙТИ1</Text> : <Text>ВЫЙТИ2</Text>)
-                        </div>
+                        <InvisibleButton onClick={() => logOut()}>
+                            <LogOut /> {collapsed ? null : <Text>Выйти из аккаунта</Text>}
+                        </InvisibleButton>
                     )}
                 </FooterContainer>
             </SidebarFooter>
@@ -170,6 +171,7 @@ const FooterContainer = styled.div<SidebarProps>`
     ${(props) => (props.$isCollapsed ? 'width: 26px;' : 'width: 100%; ')};
     flex-direction: column;
     align-items: start;
+    gap: 20px;
     transition: ${animationSpeed} all;
 `
 

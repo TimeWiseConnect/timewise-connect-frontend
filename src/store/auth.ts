@@ -2,61 +2,71 @@ import { createStore, createEvent } from 'effector'
 import { checkAuthFx } from '../api/auth/auth'
 import { UserResponse } from '../api/auth'
 import { setJwtToken } from '../api/auth/lib/jwt'
-import { logInFx } from '../api/auth/logIn'
+import { makeACallFx, validateFx } from '../api/auth/logIn'
 
 interface UserStore {
+    phase: 0 | 1 | 2
+    phone: string
     currentUser: UserResponse | null
     isAuthenticated: boolean | null
     error: string | null
-    isLoading: boolean
 }
 
 const DEFAULT_STORE: UserStore = {
+    phase: 1,
+    phone: '',
     currentUser: null,
     error: null,
     isAuthenticated: false,
-    isLoading: true,
 }
 
 export const logOut = createEvent()
-export const setLoadingFalse = createEvent()
+export const setPhone = createEvent<string>()
+export const setPhase = createEvent<1 | 2>()
 
-export const $isAuth = createStore(DEFAULT_STORE)
+export const $authStore = createStore<UserStore>(DEFAULT_STORE)
+    .on(setPhone, (state, phone) => ({
+        ...state,
+        phone,
+    }))
+    .on(setPhase, (state, phase) => ({
+        ...state,
+        phase,
+    }))
     .on(checkAuthFx.doneData, (state, result) => ({
         ...state,
         isAuthenticated: true,
         currentUser: result.user,
-        isLoading: false,
     }))
     .on(checkAuthFx.failData, (state, error) => ({
         ...state,
         isAuthenticated: false,
         error: error.message,
-        isLoading: false,
     }))
-    .on(setLoadingFalse, (state) => {
-        return {
-            ...state,
-            isAuthenticated: false,
-            isLoading: false,
-        }
-    })
-    .on(logInFx.doneData, (state, result) => ({
+    .on(makeACallFx.doneData, (state) => ({
         ...state,
-        isAuthenticated: true,
-        currentUser: result.user,
-        isLoading: false,
+        phase: 2,
     }))
-    .on(logInFx.failData, (state, error) => ({
+    .on(makeACallFx.failData, (state, error) => ({
         ...state,
-        isAuthenticated: false,
         error: error.message,
-        isLoading: false,
+    }))
+    .on(validateFx.doneData, (state, data) => ({
+        ...state,
+        phase: 0,
+        currentUser: data.user,
+        error: null,
+        isAuthenticated: true,
+    }))
+    .on(validateFx.failData, (state, error) => ({
+        ...state,
+        error: error.message,
     }))
     .on(logOut, (state) => {
         setJwtToken('')
         return {
             ...state,
+            phase: 1,
             isAuthenticated: false,
             currentUser: null,
         }

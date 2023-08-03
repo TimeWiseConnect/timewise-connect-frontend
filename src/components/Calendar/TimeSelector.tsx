@@ -13,22 +13,22 @@ type Appointment = {
 
 const appointments: Appointment[] = [
     {
-        dateTime: '2023-07-31T12:00:00.000Z',
+        dateTime: '2023-08-03T12:00:00.000Z',
         isAvailable: true,
         hasAppointment: false,
     },
     {
-        dateTime: '2023-07-31T13:00:00.000Z',
+        dateTime: '2023-08-03T13:00:00.000Z',
         isAvailable: false,
         hasAppointment: false,
     },
     {
-        dateTime: '2023-07-31T14:00:00.000Z',
+        dateTime: '2023-08-03T14:00:00.000Z',
         isAvailable: false,
         hasAppointment: true,
     },
     {
-        dateTime: '2023-07-31T15:00:00.000Z',
+        dateTime: '2023-08-03T15:00:00.000Z',
         isAvailable: true,
         hasAppointment: false,
     },

@@ -2,9 +2,7 @@ import React, { FC, useEffect } from 'react'
 import { createGlobalStyle, styled } from 'styled-components'
 import { useStore, useEvent } from 'effector-react'
 import { checkAuthFx } from './api/auth/auth'
-import { $isAuth, setLoadingFalse } from './store/auth'
 import Sidebar from './components/Sidebar/Sidebar'
-import { changeTheme, theme } from './store/theme'
 import useWindowDimensions from './hooks/useWindowDimensions'
 import useRemoveFocusWhenNotTab from './hooks/useRemoveFocusWhenNotTab'
 import Mobile from './components/mobile/Mobile'
@@ -18,20 +16,19 @@ export const App: FC = () => {
     useRemoveFocusWhenNotTab()
     useEffect(() => {
         if (localStorage.getItem('auth')) fetchEvent()
-        else setLoadingFalse()
-    }, [])
-    useEffect(() => {
-        if (localStorage.getItem('theme')) changeTheme(localStorage.getItem('theme') as theme)
+        // else setLoadingFalse()
     }, [])
 
-    const { isLoading } = useStore($isAuth)
+    const loading = useStore(checkAuthFx.pending)
     const fetchEvent = useEvent(checkAuthFx)
 
     return (
         <>
             <GlobalStyle />
             <Theme>
-                {!isLoading ? (
+                {loading ? (
+                    <Layout></Layout>
+                ) : (
                     <Wrapper>
                         <Layout>
                             <AppRouter />
@@ -39,8 +36,6 @@ export const App: FC = () => {
                         </Layout>
                         {width >= 768 ? <Footer /> : null}
                     </Wrapper>
-                ) : (
-                    <Layout></Layout>
                 )}
             </Theme>
         </>

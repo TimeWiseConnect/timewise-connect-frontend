@@ -2,10 +2,10 @@ import React, { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { privateRoutes, publicRoutes } from '../router'
 import { useStore } from 'effector-react'
-import { $isAuth } from '../store/auth'
+import { $authStore } from '../store/auth'
 
 const AppRouter: FC = () => {
-    const { isAuthenticated } = useStore($isAuth)
+    const { isAuthenticated } = useStore($authStore)
     return (
         <Routes>
             {isAuthenticated

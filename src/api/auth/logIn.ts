@@ -1,20 +1,37 @@
-import { AuthResponse } from '.'
 import { createEffect } from 'effector'
-import { setJwtToken } from './lib/jwt'
 import { $api } from '..'
+import { setJwtToken } from './lib/jwt'
 
 export type LogInRequest = {
     phone: string
-    password: string
 }
 
-export const logIn = (req: LogInRequest) => {
+type ValidateRequest = {
+    phone: string
+    code: string
+}
+
+const logIn = (req: LogInRequest) => {
     return $api.post('/auth/login', req)
 }
 
-export const logInFx = createEffect(async (req: LogInRequest): Promise<AuthResponse> => {
+const validate = (req: ValidateRequest) => {
+    return $api.post('/auth/validate', req)
+}
+
+export const makeACallFx = createEffect(async (req: LogInRequest) => {
     try {
-        const { data } = await logIn(req)
+        await logIn(req)
+    } catch (error) {
+        console.log(error)
+
+        throw new Error('Возникла какая-то ошибка')
+    }
+})
+
+export const validateFx = createEffect(async (req: ValidateRequest) => {
+    try {
+        const { data } = await validate(req)
         setJwtToken(data.token)
         return data
     } catch (error) {

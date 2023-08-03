@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { styled } from 'styled-components'
-import { $isAuth } from '../../store/auth'
+import { $authStore } from '../../store/auth'
 import { Hamburger } from '../shared/icons/mobile/Hamburger'
 import { Logo } from '../shared/icons/sidebar/Logo'
 import { Close } from '../shared/icons/Close'
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const Navbar = ({ setIsCollapsed, isCollapsed }: Props) => {
-    const { isAuthenticated } = useStore($isAuth)
+    const { isAuthenticated } = useStore($authStore)
     return (
         <NavbarLayout>
             <LogoContainer>
