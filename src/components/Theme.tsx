@@ -85,7 +85,7 @@ export const Theme = ({ children }: Props) => {
                   accent4: '#B6465B',
                   footerBg: '#0E121A',
                   footerMain: '#6C7178',
-                  disable: '#0E1118',
+                  disable: '#494F58',
                   form: '#181C26',
                   link: '#DBADB6',
                   linkHover: '#BF7281',
