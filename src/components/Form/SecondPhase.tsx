@@ -15,20 +15,28 @@ import { FormButton } from '../../styles/FormButton'
 import { Tooltip } from '../shared/icons/Tooltip'
 import { useStore } from 'effector-react'
 import { device } from '../../styles/const'
+import { Input } from '../../styles/Input'
+import { GradeInput } from '../shared/GradeInput'
 
 export const SecondPhase = () => {
-    const { name, childName, disabilty, grade, request } = useStore($formStore)
+    const { author, name, childName, disabilty, grade, request, availablePhase } = useStore($formStore)
 
     return (
         <Layout>
             <Input value={name} placeholder="Ваше имя*" onChange={(e) => setName(e.target.value)} />
-            <Input value={childName} placeholder="Имя обучающегося*" onChange={(e) => setChildName(e.target.value)} />
+            {author === 'parent' && (
+                <Input
+                    value={childName}
+                    placeholder="Имя обучающегося*"
+                    onChange={(e) => setChildName(e.target.value)}
+                />
+            )}
             <Grade>
-                <Input value={grade} placeholder="Класс*" onChange={(e) => setGrade(Number(e.target.value))} />
+                <GradeInput value={grade} setValue={setGrade} />
                 <Disabilty>
                     <Checkbox
                         checked={disabilty}
-                        onChange={(e) => setDisability(!!e.target.value)}
+                        onChange={() => setDisability(!disabilty)}
                         type="checkbox"
                         id="disability"
                     />
@@ -49,6 +57,7 @@ export const SecondPhase = () => {
                     Назад
                 </FormButton>
                 <FormButton
+                    disabled={availablePhase < 3}
                     onClick={() => {
                         nextPhase()
                     }}
@@ -68,39 +77,6 @@ const Layout = styled.div`
     width: 100%;
 `
 
-const Input = styled.input`
-    background-color: ${(props) => props.theme.bg};
-    border: 1px solid ${(props) => props.theme.lightGray};
-    padding: 17px 20px;
-    color: ${(props) => props.theme.main};
-    border-radius: 8px;
-    margin-bottom: 5px;
-    width: 100%;
-    flex-grow: 1;
-
-    &:focus {
-        outline: 1px solid ${(props) => props.theme.accent1};
-    }
-
-    &::placeholder {
-        color: ${(props) => props.theme.gray};
-    }
-
-    @media ${device.mobileS} {
-        font-size: 12px;
-        line-height: 140%;
-    }
-
-    @media ${device.tablet} {
-        font-size: 14px;
-        line-height: 130%;
-    }
-
-    @media ${device.laptop} {
-        font-size: 16px;
-    }
-`
-
 const Grade = styled.div`
     display: flex;
     width: 100%;
@@ -115,9 +91,12 @@ const Disabilty = styled.div`
     margin-right: 14px;
     align-items: center;
 `
-const Checkbox = styled.input``
+const Checkbox = styled.input`
+    cursor: pointer;
+`
 
 const Label = styled.label`
+    cursor: pointer;
     @media ${device.mobileS} {
         font-size: 12px;
         line-height: 140%;

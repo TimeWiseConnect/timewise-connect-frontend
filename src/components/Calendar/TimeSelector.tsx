@@ -199,13 +199,14 @@ const SwitchButton = styled.input<TimeProps>`
         background-color: ${(props) => props.theme.disable};
         color: ${(props) => props.theme.gray};
         cursor: default;
+        outline: 1px solid ${(props) => props.theme.disable};
     }
 
     ${(props) =>
         props.$hasAppointment
             ? `& + ${Label} {
                             color: ${props.theme.accent1} !important;
-                            outline: 1px solid  ${props.theme.accent1};
+                            outline: 1px solid  ${props.theme.accent1} !important;
                             background-color: transparent !important;
                             }
                             `

@@ -16,7 +16,8 @@ export const ViewSelector = () => {
             </div>
             <ReturnButton
                 onClick={() => {
-                    chooseDate(new Date())
+                    const today = new Date()
+                    chooseDate(new Date(today.getFullYear(), today.getMonth(), today.getDate()))
                 }}
             >
                 {new Date().getDate()}
@@ -36,12 +37,12 @@ const Layout = styled.div<Props>`
     transition: 300ms all;
 
     @media ${device.mobileS} {
-        width: ${(props) => (props.$week ? 'calc((100% - 16px) / 2)' : '100%')};
+        width: ${(props) => (props.$week ? 'calc((100% - 16px) / 2)' : 'calc(100% / 7 * 2)')};
         margin-bottom: 16px;
     }
 
     @media ${device.tablet} {
-        width: ${(props) => (props.$week ? 'calc(100% / 4)' : 'calc((100% - 16px) * 3 / 4)')};
+        width: ${(props) => (props.$week ? 'calc(100% / 4)' : 'calc((100% - 16px) / 7 * 3)')};
     }
 
     @media ${device.laptop} {
@@ -50,11 +51,7 @@ const Layout = styled.div<Props>`
     }
 
     @media ${device.laptopL} {
-        width: ${(props) => (props.$week ? 'calc(100% / 7)' : '200px')};
-    }
-
-    @media ${device.desktop} {
-        width: ${(props) => (props.$week ? 'calc(100% / 7)' : '200px')};
+        width: ${(props) => (props.$week ? 'calc(100% / 7 - 8px)' : '200px')};
     }
 `
 

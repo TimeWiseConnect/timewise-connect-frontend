@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter } from './stringUtils'
+
 export const getDaysInMonth = (year: number, month: number): number => {
     return new Date(year, month + 1, 0).getDate()
 }
@@ -21,6 +23,10 @@ export const formatDateWord = (date: Date) => {
 export const formatDateNumber = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'numeric' }
     return date.toLocaleDateString('ru-RU', options)
+}
+
+export const getMonth = (date: Date) => {
+    return capitalizeFirstLetter(date.toLocaleString('ru-RU', { month: 'long' }))
 }
 
 export const getTimeFromDate = (date: Date) => {

@@ -11,7 +11,8 @@ import { FormButton } from '../../styles/FormButton'
 
 export const FirstPhase = () => {
     const { choosenDate } = useStore($calendarStore)
-    const { author } = useStore($formStore)
+    const { author, availablePhase } = useStore($formStore)
+
     return (
         <Layout>
             <Header>
@@ -39,6 +40,7 @@ export const FirstPhase = () => {
                 <CheckButton checked={author === 'child'} />
             </Label>
             <FormButton
+                disabled={availablePhase < 2}
                 onClick={() => {
                     nextPhase()
                 }}

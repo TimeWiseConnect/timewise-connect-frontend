@@ -10,10 +10,14 @@ import { ProgressBar } from './ProgressBar'
 import { Close } from '../shared/icons/Close'
 import { InvisibleButton } from '../../styles/InvisibleButton'
 import { $calendarStore, chooseDate } from '../../store/calendar'
+import { useWatchForm } from '../../hooks/useWatchForm'
+import { FourthPhase } from './FourthPhase'
+import { FifthPhase } from './FifthPhase'
 
 export const AppointmentForm = () => {
     const { choosenDate } = useStore($calendarStore)
     const { phase } = useStore($formStore)
+    useWatchForm()
     return (
         <Layout>
             <Background />
@@ -31,10 +35,12 @@ export const AppointmentForm = () => {
                     </InvisibleButton>
                 </Header>
                 <Content>
-                    <ProgressBar />
+                    {phase !== 5 && <ProgressBar />}
                     {phase === 1 && <FirstPhase />}
                     {phase === 2 && <SecondPhase />}
                     {phase === 3 && <ThirdPhase />}
+                    {phase === 4 && <FourthPhase />}
+                    {phase === 5 && <FifthPhase />}
                 </Content>
             </Form>
         </Layout>
@@ -109,6 +115,7 @@ const Layout = styled.div`
 
 const Content = styled.div`
     width: 100%;
+    height: 100%;
     @media ${device.mobileS} {
         padding: 40px 38px 80px 38px;
     }

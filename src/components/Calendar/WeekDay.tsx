@@ -9,6 +9,8 @@ type Props = {
     date: Date
 }
 
+const weekDays = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб']
+
 export const Day = ({ date }: Props) => {
     const { choosenDate } = useStore($calendarStore)
     const isChecked = areDatesEqual(choosenDate, date)
@@ -16,7 +18,10 @@ export const Day = ({ date }: Props) => {
         <Layout $isChecked={isChecked}>
             <SwitchButton onChange={() => chooseDate(date)} id={date.toISOString()} type="radio" checked={isChecked} />
             <Label htmlFor={date.toISOString()}>
-                {formatDateWord(date)} <Text>3 окна</Text>
+                <Row>
+                    {formatDateWord(date)} <WeekDay>{weekDays[date.getDay()]}</WeekDay>
+                </Row>{' '}
+                <Text>3 окна</Text>
             </Label>
         </Layout>
     )
@@ -90,4 +95,15 @@ const Text = styled.p`
     @media ${device.laptop} {
         font-size: 13px;
     }
+`
+
+const WeekDay = styled.div`
+    color: ${(props) => props.theme.gray};
+    font-size: 13px;
+`
+
+const Row = styled.div`
+    display: flex;
+    gap: 5px;
+    align-items: end;
 `

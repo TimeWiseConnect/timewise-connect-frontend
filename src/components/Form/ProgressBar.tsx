@@ -5,15 +5,15 @@ import { styled } from 'styled-components'
 import { device } from '../../styles/const'
 
 export const ProgressBar = () => {
-    const { phase } = useStore($formStore)
+    const { phase, availablePhase } = useStore($formStore)
 
     return (
         <Layout>
             <Circle onClick={() => setPhase(1)} $done={phase > 1} $active={phase === 1} />
             <Line />
-            <Circle onClick={() => setPhase(2)} $done={phase > 2} $active={phase === 2} />
+            <Circle disabled={availablePhase < 2} onClick={() => setPhase(2)} $done={phase > 2} $active={phase === 2} />
             <Line />
-            <Circle onClick={() => setPhase(3)} $done={phase > 3} $active={phase === 3} />
+            <Circle disabled={availablePhase < 3} onClick={() => setPhase(3)} $done={phase > 3} $active={phase === 3} />
         </Layout>
     )
 }
@@ -35,6 +35,10 @@ const Circle = styled.button<Props>`
         border: none;
     `
             : ``}
+
+    &:disabled {
+        cursor: default;
+    }
 
     @media ${device.mobileS} {
         min-width: 11px;

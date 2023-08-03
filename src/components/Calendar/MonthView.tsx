@@ -19,8 +19,13 @@ export const MonthView = () => {
     for (let i = 0; i <= startDay; i++) days[startDay - i] = new Date(year, month, date - i)
     for (let i = 0; i < daysInView - startDay; i++) days[startDay + i] = new Date(year, month, date + i)
 
+    const weekDays = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+
     return (
         <Layout>
+            {weekDays.map((day) => (
+                <WeekDay key={day}>{day}</WeekDay>
+            ))}
             {days.map((day) => (
                 <Day key={day.toISOString()} date={day} />
             ))}
@@ -33,22 +38,44 @@ const Layout = styled.div`
 
     @media ${device.mobileS} {
         width: 100%;
-        height: 100vmin;
+        height: calc(100vmin + 24px);
         grid-template-columns: repeat(7, calc(100% / 7));
-        grid-auto-rows: calc(100vmin / 5);
+        grid-template-rows: 24px repeat(5, calc(100vmin / 5));
     }
 
     @media ${device.tablet} {
         width: calc(100% * 3 / 4);
         height: 425px;
         grid-template-columns: repeat(7, calc(100% / 7));
-        grid-auto-rows: 85px;
+        grid-template-rows: 24px repeat(5, 85px);
     }
 
     @media ${device.laptop} {
         width: 700px;
-        height: 750px;
+        height: 774px;
         grid-template-columns: repeat(7, 100px);
-        grid-auto-rows: 150px;
+        grid-template-rows: 24px repeat(5, 150px);
+    }
+`
+
+const WeekDay = styled.div`
+    color: ${(props) => props.theme.gray};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media ${device.mobileS} {
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    @media ${device.tablet} {
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    @media ${device.laptop} {
+        font-size: 13px;
+        margin-bottom: 10px;
     }
 `

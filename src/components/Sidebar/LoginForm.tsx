@@ -16,7 +16,7 @@ const LoginForm = ({ isCollapsed }: { isCollapsed: boolean }) => {
             }}
         >
             <Label>Телефон</Label>
-            <PhoneInput tabIndex={isCollapsed ? -1 : 0} value={phone} setValue={setPhone}></PhoneInput>
+            <PhoneInput placeholder="+7" tabIndex={isCollapsed ? -1 : 0} value={phone} setValue={setPhone}></PhoneInput>
             <Text>
                 Нет аккаунта? <BR />
                 <Link
@@ -98,3 +98,40 @@ const BR = styled.br`
 `
 
 export default LoginForm
+
+const Input = styled.input`
+    border: 1px solid ${(props) => props.theme.lightGray};
+    color: ${(props) => props.theme.main};
+    border-radius: 5px;
+    background-color: transparent;
+    transition: 300ms all;
+    line-height: 130%;
+
+    &::placeholder {
+        color: ${(props) => props.theme.gray};
+    }
+
+    &:focus {
+        outline: ${(props) => props.theme.link} 1px solid;
+    }
+
+    @media ${device.mobileS} {
+        height: 40px;
+        padding-left: 20px;
+        font-size: 12px;
+        margin-bottom: 30px;
+    }
+
+    @media ${device.tablet} {
+        height: 40px;
+        padding-left: 10px;
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+
+    @media ${device.laptop} {
+        height: 43px;
+        padding-left: 20px;
+        font-size: 14px;
+    }
+`
