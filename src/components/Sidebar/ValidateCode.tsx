@@ -10,7 +10,7 @@ import { useStore } from 'effector-react'
 export const ValidateCode = () => {
     const [timer, setTimer] = useState(5)
     const [code, setCode] = useState('')
-    const { phone } = useStore($authStore)
+    const { phone, registration, error } = useStore($authStore)
 
     useEffect(() => {
         let intervalId: NodeJS.Timer | undefined
@@ -42,14 +42,15 @@ export const ValidateCode = () => {
                 placeholder="Введите последние 4 цифры"
                 onChange={(e) => setCode(e.target.value.replaceAll(/\D/g, ''))}
             />
+            {!!error && <ErrorMessage>{error}</ErrorMessage>}
             <Button
                 disabled={code.length !== 4}
                 type="submit"
                 onClick={(event) => {
-                    // event.currentTarget.blur()
+                    event.currentTarget.blur()
                 }}
             >
-                Отправить СМС
+                {registration ? 'Зарегистрироваться' : 'Войти'}
             </Button>
         </Layout>
     )
@@ -58,6 +59,10 @@ export const ValidateCode = () => {
 const Text = styled.div`
     font-size: 14px;
     line-height: 130%;
+`
+export const ErrorMessage = styled(Text)`
+    margin-bottom: 5px;
+    color: ${(props) => props.theme.danger};
 `
 
 const Layout = styled.form`

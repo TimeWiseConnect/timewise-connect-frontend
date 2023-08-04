@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { Navbar } from './Navbar'
 import { LogIn } from './LogIn'
+import { useStore } from 'effector-react'
+import { $sidebarStore } from '../../store/sidebar'
 
 const Mobile = () => {
-    const [isCollapsed, setIsCollapsed] = useState(true)
+    const collapsed = useStore($sidebarStore) === 'closed'
+
     return (
-        <Layout $isCollapsed={isCollapsed}>
-            <Navbar setIsCollapsed={setIsCollapsed} isCollapsed={isCollapsed} />
-            {!isCollapsed ? <LogIn /> : null}
+        <Layout $isCollapsed={collapsed}>
+            <Navbar />
+            {!collapsed ? <LogIn /> : null}
         </Layout>
     )
 }

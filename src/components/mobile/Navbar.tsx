@@ -5,14 +5,12 @@ import { $authStore } from '../../store/auth'
 import { Hamburger } from '../shared/icons/mobile/Hamburger'
 import { Logo } from '../shared/icons/sidebar/Logo'
 import { Close } from '../shared/icons/Close'
+import { $sidebarStore, changeSidebarStatus } from '../../store/sidebar'
 
-type Props = {
-    isCollapsed: boolean
-    setIsCollapsed: (isOpen: boolean) => void
-}
-
-export const Navbar = ({ setIsCollapsed, isCollapsed }: Props) => {
+export const Navbar = () => {
     const { isAuthenticated } = useStore($authStore)
+    const collapsed = useStore($sidebarStore) === 'closed'
+
     return (
         <NavbarLayout>
             <LogoContainer>
@@ -23,27 +21,13 @@ export const Navbar = ({ setIsCollapsed, isCollapsed }: Props) => {
                     Connect
                 </LogoText>
             </LogoContainer>
-            {isCollapsed ? (
-                isAuthenticated ? (
-                    <Hamburger />
-                ) : (
-                    <Button
-                        onClick={() => {
-                            setIsCollapsed(false)
-                        }}
-                    >
-                        <Hamburger />
-                    </Button>
-                )
-            ) : (
-                <Button
-                    onClick={() => {
-                        setIsCollapsed(true)
-                    }}
-                >
-                    <Close />
-                </Button>
-            )}
+            <Button
+                onClick={() => {
+                    changeSidebarStatus(collapsed ? 'open' : 'closed')
+                }}
+            >
+                {collapsed ? <Hamburger /> : <Close />}
+            </Button>
         </NavbarLayout>
     )
 }

@@ -12,10 +12,11 @@ import { LoginForm } from './LoginForm'
 import { device } from '../../styles/const'
 import { $sidebarStore, changeSidebarStatus } from '../../store/sidebar'
 import { LogOut } from '../shared/icons/sidebar/LogOut'
+import { Account } from './Account'
 
 const Sidebar = () => {
     const collapsed = useStore($sidebarStore) === 'closed'
-    const { isAuthenticated, currentUser } = useStore($authStore)
+    const { isAuthenticated, currentUser, registration } = useStore($authStore)
     return (
         <SidebarLayout $isCollapsed={collapsed}>
             <ChangeWidthButton
@@ -41,21 +42,21 @@ const Sidebar = () => {
                     </LogoContainer>
                 </HeaderContainer>
                 {isAuthenticated ? (
-                    <div>
-                        <Text>{currentUser?.name}</Text>
-                    </div>
+                    <Account />
                 ) : (
-                    <ChangelingButton
-                        onClick={() => {
-                            changeSidebarStatus('open')
-                        }}
-                        disabled={!collapsed}
-                        $isCollapsed={collapsed}
-                    >
-                        Войти
-                    </ChangelingButton>
+                    <>
+                        <ChangelingButton
+                            onClick={() => {
+                                changeSidebarStatus('open')
+                            }}
+                            disabled={!collapsed}
+                            $isCollapsed={collapsed}
+                        >
+                            {registration ? 'Зарегистрироваться' : 'Войти'}
+                        </ChangelingButton>
+                        <LoginForm />
+                    </>
                 )}
-                <LoginForm />
             </SidebarHeader>
             <SidebarFooter $isCollapsed={collapsed}>
                 <FooterContainer $isCollapsed={collapsed}>
