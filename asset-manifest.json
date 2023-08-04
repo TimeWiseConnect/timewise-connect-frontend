@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/timewise-connect-frontend/static/js/main.a6ec3074.js",
+    "main.js": "/timewise-connect-frontend/static/js/main.09ce7cc9.js",
     "index.html": "/timewise-connect-frontend/index.html",
-    "main.a6ec3074.js.map": "/timewise-connect-frontend/static/js/main.a6ec3074.js.map"
+    "main.09ce7cc9.js.map": "/timewise-connect-frontend/static/js/main.09ce7cc9.js.map"
   },
   "entrypoints": [
-    "static/js/main.a6ec3074.js"
+    "static/js/main.09ce7cc9.js"
   ]
 }
