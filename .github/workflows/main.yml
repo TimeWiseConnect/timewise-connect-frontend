@@ -32,6 +32,6 @@ jobs:
             - name: Deploy to Server
               uses: easingthemes/ssh-deploy@v2
               with:
-                  run: 'cd timewise-connect-backend && npm install && npm run build && pm2 restart your_app_entry_file.js'
+                  script: 'cd timewise-connect-backend && npm install && npm run build && pm2 restart your_app_entry_file.js'
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   REMOTE_HOST: ${{ secrets.SERVER_IP }}
