@@ -33,5 +33,5 @@ jobs:
               uses: easingthemes/ssh-deploy@v2
               with:
                   command: 'cd timewise-connect-backend && npm install && npm run build && pm2 restart your_app_entry_file.js'
-                  key: ${{ secrets.SSH_PRIVATE_KEY }}
-                  host: ${{ secrets.SERVER_IP }}
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  REMOTE_HOST: ${{ secrets.SERVER_IP }}
