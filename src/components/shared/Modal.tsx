@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Divider } from './Divider'
 import { Close } from './icons/Close'
 import { InvisibleButton } from '../../styles/InvisibleButton'
-import { createEventFx } from '../../api/events/createEvent'
 
 interface ModalProps {
     isOpen: boolean

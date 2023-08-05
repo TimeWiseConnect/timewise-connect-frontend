@@ -16,7 +16,7 @@ import { Account } from './Account'
 
 const Sidebar = () => {
     const collapsed = useStore($sidebarStore) === 'closed'
-    const { isAuthenticated, currentUser, registration } = useStore($authStore)
+    const { isAuthenticated, registration } = useStore($authStore)
     return (
         <SidebarLayout $isCollapsed={collapsed}>
             <ChangeWidthButton

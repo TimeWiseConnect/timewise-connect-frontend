@@ -1,18 +1,14 @@
 import { useStore } from 'effector-react'
 import React from 'react'
 import { $calendarStore, chooseDate } from '../../store/calendar'
-import { formatDateWord, getTimeFromDate } from '../../utils/dateTimeUtils'
 import { styled } from 'styled-components'
 import { device } from '../../styles/const'
-import { $formStore, nextPhase, setAuthor, setDefault, setPhase } from '../../store/form'
-import { CheckButton } from '../shared/CheckButton'
-import { Arrow } from '../shared/icons/Arrow'
+import { setDefault } from '../../store/form'
 import { FormButton } from '../../styles/FormButton'
 import { MainText } from '../../styles/fonts/MainText'
 
 export const FifthPhase = () => {
     const { choosenDate } = useStore($calendarStore)
-    const { author, availablePhase } = useStore($formStore)
 
     return (
         <Layout>

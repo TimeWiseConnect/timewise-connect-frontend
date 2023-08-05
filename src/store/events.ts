@@ -1,6 +1,5 @@
 import { createStore } from 'effector'
 import { fetchEventsFx } from '../api/events/fetchEvents'
-import { createEventFx } from '../api/events/createEvent'
 
 export interface Event {
     dateTime: Date

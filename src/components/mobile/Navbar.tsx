@@ -1,14 +1,12 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { styled } from 'styled-components'
-import { $authStore } from '../../store/auth'
 import { Hamburger } from '../shared/icons/mobile/Hamburger'
 import { Logo } from '../shared/icons/sidebar/Logo'
 import { Close } from '../shared/icons/Close'
 import { $sidebarStore, changeSidebarStatus } from '../../store/sidebar'
 
 export const Navbar = () => {
-    const { isAuthenticated } = useStore($authStore)
     const collapsed = useStore($sidebarStore) === 'closed'
 
     return (

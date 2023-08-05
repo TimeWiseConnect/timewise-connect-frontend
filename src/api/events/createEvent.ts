@@ -1,6 +1,5 @@
 import { createEffect } from 'effector'
 import { $authApi } from '..'
-import { Event } from '../../store/events'
 import { fetchEventsFx } from './fetchEvents'
 
 export const createEvent = (date: string) => {

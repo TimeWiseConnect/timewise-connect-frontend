@@ -1,7 +1,6 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { device } from '../../../../styles/const'
-import { AccentPath } from '../AccentPath'
 import { WhiteStrokePath } from './WhiteStrokePath'
 
 export const Trash = () => (

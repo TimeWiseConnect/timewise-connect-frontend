@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LOCAL_HOST, MOSPOLYTECH } from './consts'
+import { MOSPOLYTECH } from './consts'
 import { getJwtToken } from './auth/lib/jwt'
 
 // export const API_BASE_URL = `${LOCAL_HOST}/api`
