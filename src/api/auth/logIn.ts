@@ -1,7 +1,7 @@
 import { createEffect } from 'effector'
 import { $api } from '..'
 import { setJwtToken } from './lib/jwt'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 
 export type LogInRequest = {
     type: 'LogIn'
@@ -41,7 +41,7 @@ export const makeACallFx = createEffect(async (req: LogInRequest | RegistrationR
                 await reg(req)
                 break
         }
-    } catch (error: unknown | Error | AxiosError) {
+    } catch (error) {
         console.log(error)
         if (axios.isAxiosError(error)) throw new Error(error?.response?.data.message)
         else throw new Error('Возникла какая-то ошибка. Попробуйте позже')
@@ -53,7 +53,7 @@ export const validateFx = createEffect(async (req: ValidateRequest) => {
         const { data } = await validate(req)
         setJwtToken(data.token)
         return data
-    } catch (error: unknown | Error | AxiosError) {
+    } catch (error) {
         console.log(error)
         if (axios.isAxiosError(error)) throw new Error(error?.response?.data.message)
         else throw new Error('Возникла какая-то ошибка. Попробуйте позже')

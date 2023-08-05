@@ -30,7 +30,7 @@ export default WeekView
 
 const Layout = styled.div`
     & > *:not(:last-child) {
-        border-bottom: 1px solid ${(props) => props.theme.accent2};
+        border-bottom: 1px solid ${(props) => props.theme.accent2}80;
     }
 
     @media ${device.mobileS} {

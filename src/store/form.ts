@@ -1,16 +1,20 @@
 import { createEvent, createStore } from 'effector'
+import { validateFx } from '../api/auth/logIn'
+import { checkAuthFx } from '../api/auth/auth'
+import { addEventFx } from '../api/events/addEvent'
 
 export type Phase = 1 | 2 | 3 | 4 | 5
 export type Author = 'parent' | 'child'
 
 export type Form = {
+    id: number | null
     phase: Phase
     availablePhase: Phase
     author: Author | undefined
     name: string
     childName?: string
-    disabilty: boolean
-    grade: number | undefined
+    disability: boolean
+    grade: number | null
     request: string
     connections: {
         call: boolean
@@ -22,13 +26,14 @@ export type Form = {
 }
 
 const DEFAULT_STORE: Form = {
+    id: null,
     phase: 1,
     availablePhase: 1,
     author: undefined,
     name: '',
     childName: undefined,
-    disabilty: false,
-    grade: undefined,
+    disability: false,
+    grade: null,
     request: '',
     connections: {
         call: false,
@@ -46,7 +51,7 @@ export const setAuthor = createEvent<Author>()
 export const setName = createEvent<string>()
 export const setChildName = createEvent<string>()
 export const setDisability = createEvent<boolean>()
-export const setGrade = createEvent<number>()
+export const setGrade = createEvent<number | null>()
 export const setRequest = createEvent<string>()
 export const setCall = createEvent<boolean>()
 export const setSms = createEvent<boolean>()
@@ -55,8 +60,33 @@ export const setAvailablePhase = createEvent<Phase>()
 export const setPhone = createEvent<string>()
 export const setComment = createEvent<string>()
 export const setDefault = createEvent()
+export const setId = createEvent<number | null>()
 
 export const $formStore = createStore<Form>(DEFAULT_STORE)
+    .on(validateFx.doneData, (oldState, data) => {
+        if (oldState.phase === 4) {
+            const { phone, request, name, childName, grade, disability, connections, comment, id } = oldState
+            if (grade && id)
+                addEventFx({
+                    reqBody: {
+                        phone,
+                        request,
+                        name,
+                        childName,
+                        grade,
+                        disability,
+                        call: connections.call,
+                        sms: connections.sms,
+                        messenger: connections.messenger,
+                        comment,
+                    },
+                    id,
+                })
+            return { ...oldState, name: data.name, phone: data.phone, phase: 5 }
+        }
+        return { ...oldState, name: data.name, phone: data.phone }
+    })
+    .on(checkAuthFx.doneData, (oldState, { user }) => ({ ...oldState, name: user.name, phone: user.phone }))
     .on(nextPhase, (oldState) => {
         if (oldState.phase !== 5) oldState.phase++
         return { ...oldState }
@@ -69,7 +99,7 @@ export const $formStore = createStore<Form>(DEFAULT_STORE)
     .on(setPhase, (oldState, phase) => ({ ...oldState, phase }))
     .on(setName, (oldState, name) => ({ ...oldState, name }))
     .on(setChildName, (oldState, childName) => ({ ...oldState, childName }))
-    .on(setDisability, (oldState, disabilty) => ({ ...oldState, disabilty }))
+    .on(setDisability, (oldState, disability) => ({ ...oldState, disability }))
     .on(setGrade, (oldState, grade) => ({ ...oldState, grade }))
     .on(setRequest, (oldState, request) => ({ ...oldState, request }))
     .on(setCall, (oldState, call) => ({ ...oldState, connections: { ...oldState.connections, call } }))
@@ -79,3 +109,5 @@ export const $formStore = createStore<Form>(DEFAULT_STORE)
     .on(setPhone, (oldState, phone) => ({ ...oldState, phone }))
     .on(setComment, (oldState, comment) => ({ ...oldState, comment }))
     .on(setDefault, () => DEFAULT_STORE)
+    .on(setId, (oldState, id) => ({ ...oldState, id }))
+    .on(addEventFx.doneData, (oldState) => ({ ...oldState, phase: 5 }))

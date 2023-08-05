@@ -4,6 +4,7 @@ import { areDatesEqual, formatDateWord } from '../../utils/dateTimeUtils'
 import { $calendarStore, chooseDate } from '../../store/calendar'
 import { useStore } from 'effector-react'
 import { device } from '../../styles/const'
+import { $eventStore } from '../../store/events'
 
 type Props = {
     date: Date
@@ -14,14 +15,22 @@ const weekDays = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб']
 export const Day = ({ date }: Props) => {
     const { choosenDate } = useStore($calendarStore)
     const isChecked = areDatesEqual(choosenDate, date)
+    const { events } = useStore($eventStore)
+
+    const windows = events.filter((event) => areDatesEqual(event.dateTime, date)).length
+    const lastDigit = windows % 10
+
     return (
         <Layout $isChecked={isChecked}>
             <SwitchButton onChange={() => chooseDate(date)} id={date.toISOString()} type="radio" checked={isChecked} />
             <Label htmlFor={date.toISOString()}>
                 <Row>
                     {formatDateWord(date)} <WeekDay>{weekDays[date.getDay()]}</WeekDay>
-                </Row>{' '}
-                <Text>3 окна</Text>
+                </Row>
+                {!!windows &&
+                    ((lastDigit === 1 && <Text>{windows} окно</Text>) ||
+                        (lastDigit > 1 && lastDigit < 5 && <Text>{windows} окна</Text>) ||
+                        (lastDigit > 4 && <Text>{windows} окон</Text>))}
             </Label>
         </Layout>
     )
@@ -34,7 +43,7 @@ type LayoutProps = {
 const Layout = styled.div<LayoutProps>`
     ${(props) =>
         props.$isChecked
-            ? ` border-radius: 2px; outline :  2px solid ${props.theme.accent2}; border-bottom: none !important;`
+            ? ` border-radius: 1px; outline :  1px solid ${props.theme.accent2}; border-bottom: none !important;`
             : ''}
     display: flex;
     width: 100%;

@@ -4,6 +4,7 @@ import { areDatesEqual, formatDateNumber } from '../../utils/dateTimeUtils'
 import { $calendarStore, chooseDate } from '../../store/calendar'
 import { useStore } from 'effector-react'
 import { device } from '../../styles/const'
+import { $eventStore } from '../../store/events'
 
 type Props = {
     date: Date
@@ -11,12 +12,15 @@ type Props = {
 
 export const Day = ({ date }: Props) => {
     const { choosenDate } = useStore($calendarStore)
+    const { events } = useStore($eventStore)
     const isChecked = areDatesEqual(choosenDate, date)
     const dateString = formatDateNumber(date)
     const dateNumbers = dateString.split('.')
     const yesterday = new Date()
     yesterday.setDate(new Date().getDate() - 1)
 
+    const windows = events.filter((event) => areDatesEqual(event.dateTime, date)).length
+    const lastDigit = windows % 10
     return (
         <Layout $isChecked={isChecked}>
             <SwitchButton
@@ -32,7 +36,10 @@ export const Day = ({ date }: Props) => {
                     <Month>.{dateNumbers[1]}</Month>
                 </Upper>
                 <Lower>
-                    <Text>3 окна</Text>
+                    {!!windows &&
+                        ((lastDigit === 1 && <Text>{windows} окно</Text>) ||
+                            (lastDigit > 1 && lastDigit < 5 && <Text>{windows} окна</Text>) ||
+                            (lastDigit > 4 && <Text>{windows} окна</Text>))}
                 </Lower>
             </Label>
         </Layout>
@@ -61,7 +68,7 @@ const Label = styled.label<LayoutProps>`
     height: 100%;
     user-select: none;
     transition: 200ms all;
-    outline: 1px solid ${(props) => props.theme.accent2};
+    outline: 1px solid ${(props) => props.theme.accent2}50;
     @media ${device.mobileS} {
         font-size: 12px;
         ${(props) => (props.$isChecked ? `padding: 10px;` : `padding: 13px 10px;`)};
@@ -131,7 +138,7 @@ const SwitchButton = styled.input`
     z-index: 1;
 
     &:checked + ${Label} {
-        outline: 2px solid ${(props) => props.theme.accent2};
+        outline: 1px solid ${(props) => props.theme.accent2};
         z-index: 2;
         background-color: ${(props) => props.theme.bg};
     }

@@ -19,7 +19,7 @@ import { Input } from '../../styles/Input'
 import { GradeInput } from '../shared/GradeInput'
 
 export const SecondPhase = () => {
-    const { author, name, childName, disabilty, grade, request, availablePhase } = useStore($formStore)
+    const { author, name, childName, disability, grade, request, availablePhase } = useStore($formStore)
 
     return (
         <Layout>
@@ -35,8 +35,8 @@ export const SecondPhase = () => {
                 <GradeInput value={grade} setValue={setGrade} />
                 <Disabilty>
                     <Checkbox
-                        checked={disabilty}
-                        onChange={() => setDisability(!disabilty)}
+                        checked={disability}
+                        onChange={() => setDisability(!disability)}
                         type="checkbox"
                         id="disability"
                     />

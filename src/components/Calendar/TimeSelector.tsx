@@ -1,74 +1,107 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { formatDateWord, getTimeFromDate, isTimeEqual } from '../../utils/dateTimeUtils'
+import { areDatesEqual, formatDateWord, getTimeFromDate, isTimeEqual } from '../../utils/dateTimeUtils'
 import { useStore } from 'effector-react'
 import { $calendarStore, SwitcherType, chooseDate } from '../../store/calendar'
 import { device } from '../../styles/const'
-
-type Appointment = {
-    dateTime: string
-    isAvailable: boolean
-    hasAppointment: boolean
-}
-
-const appointments: Appointment[] = [
-    {
-        dateTime: '2023-08-03T12:00:00.000Z',
-        isAvailable: true,
-        hasAppointment: false,
-    },
-    {
-        dateTime: '2023-08-03T13:00:00.000Z',
-        isAvailable: false,
-        hasAppointment: false,
-    },
-    {
-        dateTime: '2023-08-03T14:00:00.000Z',
-        isAvailable: false,
-        hasAppointment: true,
-    },
-    {
-        dateTime: '2023-08-03T15:00:00.000Z',
-        isAvailable: true,
-        hasAppointment: false,
-    },
-]
+import { $eventStore } from '../../store/events'
+import { $authStore } from '../../store/auth'
+import { FormButton } from '../../styles/FormButton'
+import { setId } from '../../store/form'
+import { InvisibleButton } from '../../styles/InvisibleButton'
+import { Trash } from '../shared/icons/admin/Trash'
+import Modal from '../shared/Modal'
+import { AddWindow } from '../Admin/AddWindow'
+import { setDeleteWindowOpen } from '../../store/deleteWindow'
+import { setClearAppointmentOpen } from '../../store/clearAppointment'
+import { DeleteWindow } from '../Admin/Modals/DeleteWindow'
+import { ClearAppointment } from '../Admin/Modals/ClearAppointment'
+import { $addWindowStore, setAddWindowOpen } from '../../store/addWindow'
 
 export const TimeSelector = () => {
     const { choosenDate, view } = useStore($calendarStore)
+    const { events } = useStore($eventStore)
+    const { currentUser, role } = useStore($authStore)
+    const { action, date, time, open } = useStore($addWindowStore)
+
+    const currentEvents = events
+        .filter((event) => areDatesEqual(event.dateTime, choosenDate))
+        .sort((a, b) => a.dateTime.getTime() - b.dateTime.getTime())
 
     return (
         <Layout $view={view}>
             <Header $view={view}>{formatDateWord(choosenDate)}</Header>
             <Appointments $view={view}>
-                {appointments.length === 0 ? (
+                {currentEvents.length === 0 ? (
                     <NoAppointmentsText>
                         В{'\u00A0'}данный момент окон для{'\u00A0'}записи нет
                     </NoAppointmentsText>
                 ) : (
-                    appointments.map((appointment) => {
+                    currentEvents.map((appointment) => {
                         const date = new Date(appointment.dateTime)
                         const isChecked = isTimeEqual(choosenDate, date)
                         return (
-                            <Time $view={view} key={appointment.dateTime}>
+                            <Time $view={view} key={appointment.dateTime.toISOString()}>
                                 <SwitchButton
                                     $view={view}
                                     disabled={!appointment.isAvailable}
-                                    $hasAppointment={appointment.hasAppointment}
-                                    onChange={() => chooseDate(date)}
+                                    $hasAppointment={!!appointment.userId && appointment.userId === currentUser?.id}
+                                    onChange={() => {
+                                        if (role !== 'ADMIN') chooseDate(date)
+                                        setId(appointment.id)
+                                    }}
                                     id={date.toISOString()}
                                     type="radio"
                                     checked={isChecked}
                                 />
-                                <Label htmlFor={date.toISOString()}>
-                                    {getTimeFromDate(new Date(appointment.dateTime))}
-                                    {appointment.hasAppointment && <Text>вы записаны</Text>}
+                                <Label $admin={role === 'ADMIN'} htmlFor={date.toISOString()}>
+                                    <AppointmentInfo>
+                                        {getTimeFromDate(new Date(appointment.dateTime))}
+                                        {!!appointment.userId && appointment.userId === currentUser?.id && (
+                                            <Text>вы записаны</Text>
+                                        )}
+                                    </AppointmentInfo>
+                                    {(!appointment.isAvailable ||
+                                        role === 'ADMIN' ||
+                                        (!!appointment.userId && appointment.userId === currentUser?.id)) && (
+                                        <InvisibleButton
+                                            onClick={(event) => {
+                                                event.currentTarget.blur()
+                                                if (appointment.isAvailable && role === 'ADMIN') {
+                                                    setDeleteWindowOpen(true)
+                                                } else {
+                                                    setClearAppointmentOpen(true)
+                                                }
+                                            }}
+                                        >
+                                            <Trash />
+                                        </InvisibleButton>
+                                    )}
+                                    {role === 'ADMIN' && <DeleteWindow eventId={appointment.id} />}
+                                    {role === 'ADMIN' && <ClearAppointment eventId={appointment.id} />}
                                 </Label>
                             </Time>
                         )
                     })
                 )}
             </Appointments>
+            {role === 'ADMIN' && (
+                <>
+                    <AddTimeButton onClick={() => setAddWindowOpen(true)}>Добавить время</AddTimeButton>
+                    <Modal
+                        title="Добавить окно для записи"
+                        isOpen={open}
+                        setIsOpen={setAddWindowOpen}
+                        agree="Создать запись"
+                        disagree="Отмена"
+                        action={() => {
+                            action(date, time)
+                        }}
+                    >
+                        <AddWindow />
+                    </Modal>
+                </>
+            )}
         </Layout>
     )
 }
@@ -164,29 +197,42 @@ const NoAppointmentsText = styled.p`
     }
 `
 
-const Label = styled.label`
-    width: 100%;
-    position: relative;
+const AppointmentInfo = styled.div`
     display: flex;
     align-items: end;
-    cursor: pointer;
-    margin: 1px;
 
     @media ${device.mobileS} {
-        padding: 22px 15px;
         gap: 5px;
         font-size: 14px;
     }
 
+    @media ${device.laptop} {
+        font-size: 20px;
+        gap: 10px;
+    }
+`
+
+type RoleProps = { $admin: boolean }
+
+const Label = styled.label<RoleProps>`
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: ${(props) => (props.$admin ? '' : 'pointer')};
+    margin: 1px;
+
+    @media ${device.mobileS} {
+        padding: 22px 15px;
+    }
+
     @media ${device.tablet} {
         padding: 20px;
-        font-size: 16px;
     }
 
     @media ${device.laptop} {
         padding: 30px 20px;
-        font-size: 20px;
-        gap: 10px;
     }
 `
 
@@ -252,4 +298,11 @@ const Appointments = styled.div<Props>`
         display: block;
         width: 100%;
     }
+`
+
+const AddTimeButton = styled(FormButton)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 `

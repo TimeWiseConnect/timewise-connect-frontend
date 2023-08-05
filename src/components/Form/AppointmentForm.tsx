@@ -1,7 +1,7 @@
 import { useStore } from 'effector-react'
 import React from 'react'
 import { styled } from 'styled-components'
-import { $formStore, setPhase } from '../../store/form'
+import { $formStore, setId, setPhase } from '../../store/form'
 import { FirstPhase } from './FirstPhase'
 import { SecondPhase } from './SecondPhase'
 import { ThirdPhase } from './ThirdPhase'
@@ -28,6 +28,7 @@ export const AppointmentForm = () => {
                             chooseDate(
                                 new Date(choosenDate.getFullYear(), choosenDate.getMonth(), choosenDate.getDate()),
                             )
+                            setId(null)
                             setPhase(1)
                         }}
                     >

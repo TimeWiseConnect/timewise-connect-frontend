@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Input } from '../../styles/Input'
 
 type Props = {
-    value: number | undefined
-    setValue: (number: number | undefined) => void
+    value: number | null
+    setValue: (number: number | null) => void
 }
 
 export const GradeInput = ({ value, setValue }: Props) => {
@@ -13,7 +13,7 @@ export const GradeInput = ({ value, setValue }: Props) => {
         value = value.replaceAll(/\D/g, '')
         const valueNum = Number(value)
         if (!value) {
-            setValue(undefined)
+            setValue(null)
             setVal(value)
             return
         }

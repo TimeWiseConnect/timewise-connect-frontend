@@ -8,14 +8,14 @@ import { InvisibleButton } from '../../styles/InvisibleButton'
 import { Settings } from '../shared/icons/sidebar/Settings'
 
 export const Account = () => {
-    const { currentUser } = useStore($authStore)
+    const { currentUser, role } = useStore($authStore)
     const collapsed = useStore($sidebarStore) === 'closed'
 
     return (
         <Layout>
             <Header $collapsed={collapsed}>
                 <User>
-                    <Avatar></Avatar>
+                    <Avatar $collapsed={collapsed} $admin={role === 'ADMIN'}></Avatar>
                     {!collapsed && <Name>{currentUser?.name}</Name>}
                 </User>
                 {!collapsed && (
@@ -30,10 +30,12 @@ export const Account = () => {
 
 const Layout = styled.div`
     width: 100%;
+    margin-bottom: 2px;
 `
 
 type Props = {
     $collapsed: boolean
+    $admin?: boolean
 }
 
 const Header = styled.div<Props>`
@@ -42,9 +44,10 @@ const Header = styled.div<Props>`
     justify-content: ${(props) => (props.$collapsed ? 'center' : 'space-between')};
 `
 
-const Avatar = styled.div`
+const Avatar = styled.div<Props>`
     border-radius: 50%;
     background-color: ${(props) => props.theme.main};
+    ${(props) => (props.$admin ? `outline: 2px solid ${props.theme.accent2};` : '')}
 
     @media ${device.mobileS} {
         width: 50px;

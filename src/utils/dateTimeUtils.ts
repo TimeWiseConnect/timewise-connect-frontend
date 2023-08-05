@@ -15,6 +15,14 @@ export const isTimeEqual = (date1: Date, date2: Date): boolean => {
     return date1.getTime() === date2.getTime()
 }
 
+export const formatDateToYYYYMMDD = (date: Date) => {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+
+    return `${year}-${month}-${day}`
+}
+
 export const formatDateWord = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' }
     return date.toLocaleDateString('ru-RU', options)

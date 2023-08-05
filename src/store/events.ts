@@ -1,17 +1,22 @@
 import { createStore } from 'effector'
 import { fetchEventsFx } from '../api/events/fetchEvents'
 import { createEventFx } from '../api/events/createEvent'
-import { useEvent } from 'effector-react'
 
 export interface Event {
-    id: number
     dateTime: Date
     isAvailable: boolean
+    id: number
     name?: string
-    isApproved?: boolean
+    childName?: string
+    disability: boolean
+    grade?: number | null
     request?: string
+    call?: boolean
+    sms?: boolean
+    messenger?: boolean
     phone?: string
-    childAge?: number
+    comment?: string
+    userId?: number
 }
 
 interface EventStore {
@@ -24,13 +29,8 @@ const DEFAULT_STORE: EventStore = {
     isLoading: true,
 }
 
-export const $eventStore = createStore(DEFAULT_STORE)
-    .on(fetchEventsFx.doneData, (state, result) => ({
-        ...state,
-        events: result,
-        isLoading: false,
-    }))
-    .on(createEventFx.doneData, (state, result) => ({
-        ...state,
-        events: result,
-    }))
+export const $eventStore = createStore(DEFAULT_STORE).on(fetchEventsFx.doneData, (state, result) => ({
+    ...state,
+    events: result,
+    isLoading: false,
+}))

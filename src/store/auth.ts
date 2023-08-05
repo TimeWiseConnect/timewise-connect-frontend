@@ -3,6 +3,7 @@ import { checkAuthFx } from '../api/auth/auth'
 import { UserResponse } from '../api/auth'
 import { setJwtToken } from '../api/auth/lib/jwt'
 import { makeACallFx, validateFx } from '../api/auth/logIn'
+import { getRoleFx } from '../api/roles/getRoles'
 
 interface UserStore {
     phase: 0 | 1 | 2
@@ -12,6 +13,7 @@ interface UserStore {
     isAuthenticated: boolean | null
     error: string | null
     registration: boolean
+    role: string
 }
 
 const DEFAULT_STORE: UserStore = {
@@ -22,6 +24,7 @@ const DEFAULT_STORE: UserStore = {
     error: null,
     isAuthenticated: false,
     registration: false,
+    role: '',
 }
 
 export const logOut = createEvent()
@@ -93,3 +96,7 @@ export const $authStore = createStore<UserStore>(DEFAULT_STORE)
             registration: false,
         }
     })
+    .on(getRoleFx.doneData, (state, role) => ({
+        ...state,
+        role,
+    }))

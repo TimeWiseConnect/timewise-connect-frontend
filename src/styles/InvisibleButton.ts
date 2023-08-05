@@ -2,6 +2,7 @@ import { styled } from 'styled-components'
 import { device } from './const'
 import { Text } from './Text'
 import { SidebarPath } from '../components/shared/icons/sidebar/SidebarPath'
+import { WhiteStrokePath } from '../components/shared/icons/admin/WhiteStrokePath'
 
 export const InvisibleButton = styled.button`
     display: flex;
@@ -34,6 +35,9 @@ export const InvisibleButton = styled.button`
         &:focus ${Text}, &:focus ${SidebarPath} {
             color: ${(props) => props.theme.accent1};
             fill: ${(props) => props.theme.accent1};
+        }
+        &:focus ${WhiteStrokePath}, &:hover ${WhiteStrokePath} {
+            stroke: ${(props) => props.theme.accent3};
         }
     }
 

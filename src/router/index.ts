@@ -1,4 +1,4 @@
-import { Calendar } from '../pages/Calendar'
+import { Main } from '../pages/Main'
 
 export interface IRoute {
     path: string
@@ -12,13 +12,13 @@ export enum RouteNames {
 export const publicRoutes: IRoute[] = [
     {
         path: RouteNames.MAIN,
-        component: Calendar,
+        component: Main,
     },
 ]
 
 export const privateRoutes: IRoute[] = [
     {
         path: RouteNames.MAIN,
-        component: Calendar,
+        component: Main,
     },
 ]

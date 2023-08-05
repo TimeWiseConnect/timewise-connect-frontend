@@ -10,10 +10,12 @@ import { Footer } from './components/Footer/Footer'
 import AppRouter from './router/AppRouter'
 import { Theme } from './components/Theme'
 import { device } from './styles/const'
+import { useRole } from './hooks/useRoles'
 
 export const App: FC = () => {
     const { width } = useWindowDimensions()
     useRemoveFocusWhenNotTab()
+    useRole()
     useEffect(() => {
         if (localStorage.getItem('auth')) fetchEvent()
         // else setLoadingFalse()

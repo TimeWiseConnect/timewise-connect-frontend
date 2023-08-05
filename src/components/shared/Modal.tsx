@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Divider } from './Divider'
+import { Close } from './icons/Close'
+import { InvisibleButton } from '../../styles/InvisibleButton'
+import { createEventFx } from '../../api/events/createEvent'
 
 interface ModalProps {
-    title: string
     isOpen: boolean
     setIsOpen: (isOpen: boolean) => void
-    children: React.ReactNode
+    title: string
+    children?: React.ReactNode
+    agree: string
+    disagree: string
+    action: () => void
 }
 
 const ModalOverlay = styled.div<{ $isOpen: boolean }>`
@@ -19,22 +25,14 @@ const ModalOverlay = styled.div<{ $isOpen: boolean }>`
     display: ${(props) => (props.$isOpen ? 'flex' : 'none')};
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 `
 
 const ModalContent = styled.div`
-    color: black;
-    min-width: 30em;
-    min-height: 30em;
-    background-color: white;
-    padding: 20px;
-    border-radius: 4px;
-`
-
-const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    color: black;
+    position: relative;
+    color: ${(props) => props.theme.main};
+    background-color: ${(props) => props.theme.form};
+    padding: 100px 150px;
 `
 
 const Content = styled.div`
@@ -42,29 +40,71 @@ const Content = styled.div`
     flex-direction: column;
     gap: 20px;
     padding: 30px;
-    justify-content: space-between;
-    padding: 20px;
-    color: black;
+    align-items: space-between;
+    justify-content: center;
+    padding: 20px 0px;
 `
 
-const Modal: React.FC<ModalProps> = ({ title, isOpen, setIsOpen, children }) => {
+const Title = styled.h2`
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 50px;
+`
+
+const CloseButton = styled(InvisibleButton)`
+    position: absolute;
+    top: 40px;
+    right: 40px;
+`
+const Buttons = styled.div`
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+`
+
+const Button = styled.button`
+    width: 194px;
+    height: 53px;
+    border-radius: 10px;
+    border: 1px solid ${(props) => props.theme.accent1};
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+        background-color: ${(props) => props.theme.accent3};
+        border: 1px solid ${(props) => props.theme.accent3};
+    }
+`
+
+const AgreeButton = styled(Button)`
+    background-color: ${(props) => props.theme.accent1};
+`
+
+const DisagreeButton = styled(Button)`
+    color: ${(props) => props.theme.main};
+`
+
+const Modal: React.FC<ModalProps> = ({ action, title, isOpen, setIsOpen, children, agree, disagree }) => {
     const closeModal = () => {
         setIsOpen(false)
     }
 
     return (
-        <>
-            <ModalOverlay $isOpen={isOpen} onMouseDown={closeModal}>
-                <ModalContent onMouseDown={(e) => e.stopPropagation()}>
-                    <Header>
-                        <h2>{title}</h2>
-                        <button onClick={closeModal}>Close</button>
-                    </Header>
-                    <Divider />
-                    <Content>{children}</Content>
-                </ModalContent>
-            </ModalOverlay>
-        </>
+        <ModalOverlay $isOpen={isOpen} onMouseDown={closeModal}>
+            <ModalContent onMouseDown={(e) => e.stopPropagation()}>
+                <CloseButton onClick={closeModal}>
+                    <Close />
+                </CloseButton>
+                <Title>{title}</Title>
+                {!!children && <Content>{children}</Content>}
+                <Buttons>
+                    <DisagreeButton onClick={() => closeModal()}>{disagree}</DisagreeButton>
+                    <AgreeButton onClick={() => action()}>{agree}</AgreeButton>
+                </Buttons>
+            </ModalContent>
+        </ModalOverlay>
     )
 }
 

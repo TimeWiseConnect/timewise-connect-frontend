@@ -1,15 +1,16 @@
 import { useStore } from 'effector-react'
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
-import { $formStore, nextPhase, prevPhase } from '../../store/form'
+import { $formStore, prevPhase } from '../../store/form'
 import { Arrow } from '../shared/icons/Arrow'
 import { FormButton } from '../../styles/FormButton'
 import { MainText } from '../../styles/fonts/MainText'
 import { CodeInput } from '../shared/CodeInput'
 import { device } from '../../styles/const'
+import { validateFx } from '../../api/auth/logIn'
 
 export const FourthPhase = () => {
-    const { availablePhase } = useStore($formStore)
+    const { phone } = useStore($formStore)
     const [code, setCode] = useState('')
 
     return (
@@ -30,7 +31,7 @@ export const FourthPhase = () => {
                 <FormButton
                     disabled={code.length !== 4}
                     onClick={() => {
-                        nextPhase()
+                        validateFx({ phone, code })
                     }}
                 >
                     Дальше

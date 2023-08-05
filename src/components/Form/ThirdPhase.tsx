@@ -7,9 +7,14 @@ import { MainText } from '../../styles/fonts/MainText'
 import { Arrow } from '../shared/icons/Arrow'
 import { FormButton } from '../../styles/FormButton'
 import { PhoneInput } from '../shared/PhoneInput'
+import { LogInRequest, makeACallFx } from '../../api/auth/logIn'
+import { $authStore } from '../../store/auth'
+import { addEventFx } from '../../api/events/addEvent'
 
 export const ThirdPhase = () => {
-    const { connections, phone, comment, availablePhase } = useStore($formStore)
+    const { connections, phone, request, name, childName, grade, disability, comment, availablePhase, id } =
+        useStore($formStore)
+    const { currentUser } = useStore($authStore)
     return (
         <Layout>
             <Text>Предпочитаемый способ связи*</Text>
@@ -56,6 +61,27 @@ export const ThirdPhase = () => {
                 <FormButton
                     disabled={availablePhase < 4}
                     onClick={() => {
+                        if (currentUser?.id) {
+                            if (grade && id)
+                                addEventFx({
+                                    reqBody: {
+                                        phone,
+                                        request,
+                                        name,
+                                        childName,
+                                        grade,
+                                        disability,
+                                        call: connections.call,
+                                        sms: connections.sms,
+                                        messenger: connections.messenger,
+                                        comment,
+                                    },
+                                    id,
+                                })
+                            return
+                        }
+                        const req: LogInRequest = { type: 'LogIn', phone }
+                        makeACallFx(req)
                         nextPhase()
                     }}
                 >

@@ -1,20 +1,19 @@
 import { createEffect } from 'effector'
 import { $authApi } from '..'
-import { Event } from '../../store/events'
 import { fetchEventsFx } from './fetchEvents'
+import axios from 'axios'
 
 export const clearEvent = (id: number) => {
     return $authApi.post(`/events/clear/${id}`)
 }
 
-export const clearEventFx = createEffect(async (id: number): Promise<Event[]> => {
+export const clearEventFx = createEffect(async (id: number) => {
     try {
-        const { data } = await clearEvent(id)
+        await clearEvent(id)
         fetchEventsFx()
-        return data.map((event: Event) => ({ ...event, dateTime: new Date(event.dateTime) }))
     } catch (error) {
         console.log(error)
-
-        throw new Error('Возникла какая-то ошибка')
+        if (axios.isAxiosError(error)) throw new Error(error?.response?.data.message)
+        else throw new Error('Возникла какая-то ошибка. Попробуйте позже')
     }
 })
