@@ -3,7 +3,6 @@ import { useStore } from 'effector-react'
 import { $authStore, logOut } from '../../store/auth'
 import { styled } from 'styled-components'
 import { Logo } from '../shared/icons/sidebar/Logo'
-import { SideButton } from '../shared/icons/sidebar/SideButton'
 import { TWC } from '../shared/icons/sidebar/TWC'
 import { InvisibleButton } from '../../styles/InvisibleButton'
 import { Text } from '../../styles/Text'
@@ -13,20 +12,14 @@ import { device } from '../../styles/const'
 import { $sidebarStore, changeSidebarStatus } from '../../store/sidebar'
 import { LogOut } from '../shared/icons/sidebar/LogOut'
 import { Account } from './Account'
+import { CollapseButton } from './CollapseButton'
 
 const Sidebar = () => {
     const collapsed = useStore($sidebarStore) === 'closed'
     const { isAuthenticated, registration } = useStore($authStore)
     return (
         <SidebarLayout $isCollapsed={collapsed}>
-            <ChangeWidthButton
-                $isCollapsed={collapsed}
-                onClick={() => {
-                    changeSidebarStatus(collapsed ? 'open' : 'closed')
-                }}
-            >
-                <SideButton />
-            </ChangeWidthButton>
+            <CollapseButton />
             <SidebarHeader $isCollapsed={collapsed}>
                 <HeaderContainer $isCollapsed={collapsed}>
                     <LogoContainer $isCollapsed={collapsed}>
@@ -194,20 +187,6 @@ const ChangelingButton = styled(InvisibleButton)<SidebarProps>`
     @media ${device.laptop} {
         width: ${(props) => (props.$isCollapsed ? '48px' : '100%')};
         margin-bottom: 40px;
-    }
-`
-
-const ChangeWidthButton = styled(InvisibleButton)<SidebarProps>`
-    transition: ${animationSpeed} all;
-    position: absolute;
-    ${(props) => (props.$isCollapsed ? '' : 'rotate: 180deg;')}
-
-    @media ${device.tablet} {
-        right: calc(${(props) => (props.$isCollapsed ? '60px' : '180px')} - 13px);
-    }
-
-    @media ${device.laptop} {
-        right: calc(${(props) => (props.$isCollapsed ? '75px' : '328px')} - 13px);
     }
 `
 

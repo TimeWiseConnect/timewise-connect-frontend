@@ -6,6 +6,7 @@ import { useStore } from 'effector-react'
 type ColorTheme = {
     bg: string
     main: string
+    alwaysBlack: string
     contrast: string
     lightGray: string
     gray: string
@@ -46,6 +47,7 @@ export const Theme = ({ children }: Props) => {
             ? {
                   bg: '#FFFFFF',
                   main: '#0F1523',
+                  alwaysBlack: '#0F1523',
                   contrast: '#181C26',
                   lightGray: '#D1D5DB',
                   gray: '#9596A6',
@@ -76,6 +78,7 @@ export const Theme = ({ children }: Props) => {
             : {
                   bg: '#131720',
                   main: '#C3C3C3',
+                  alwaysBlack: '#131720',
                   contrast: '#181C26',
                   lightGray: '#494F58',
                   gray: '#4A4B5A',
