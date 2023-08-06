@@ -31,5 +31,5 @@ jobs:
                   REMOTE_HOST: ${{ secrets.SERVER_IP }}
                   REMOTE_USER: ${{ secrets.REMOTE_USER }}
                   SOURCE: 'build/'
-                  TARGET: '/root/www/'
+                  TARGET: '/root/www/build'
                   EXCLUDE: '/dist/, /node_modules/'
