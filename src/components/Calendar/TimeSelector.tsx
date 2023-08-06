@@ -225,6 +225,10 @@ const Label = styled.label<RoleProps>`
     cursor: ${(props) => (props.$admin ? '' : 'pointer')};
     margin: 1px;
 
+    &:hover {
+        outline: 1px solid ${(props) => props.theme.accent2};
+    }
+
     @media ${device.mobileS} {
         padding: 22px 15px;
     }
@@ -261,6 +265,7 @@ const SwitchButton = styled.input<TimeProps>`
             : ''}
 
     &:checked + ${Label} {
+        border: 1px solid ${(props) => props.theme.accent2}99;
         outline: 1px solid ${(props) => props.theme.accent2};
         z-index: 5;
     }

@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { MOSPOLYTECH } from './consts'
 import { getJwtToken } from './auth/lib/jwt'
+import { TWS } from './consts'
 
-// export const API_BASE_URL = `${LOCAL_HOST}/api`
-export const API_BASE_URL = `${MOSPOLYTECH}/api`
+export const API_BASE_URL = `${TWS}/api`
 
 export const $api = axios.create({ baseURL: API_BASE_URL })
 export const $authApi = axios.create({ baseURL: API_BASE_URL })

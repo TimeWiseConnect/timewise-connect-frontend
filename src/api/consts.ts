@@ -1,2 +1,2 @@
-export const LOCAL_HOST = 'http://localhost:5000'
-export const MOSPOLYTECH = 'https://timewise-connect.ru:7000'
+export const LOCAL_HOST = 'http://localhost:7000'
+export const TWS = 'https://timewise-connect.ru'
