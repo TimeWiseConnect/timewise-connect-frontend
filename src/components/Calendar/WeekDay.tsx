@@ -43,7 +43,7 @@ type LayoutProps = {
 const Layout = styled.div<LayoutProps>`
     ${(props) =>
         props.$isChecked
-            ? ` border-radius: 1px; outline :  1px solid ${props.theme.accent2}; border-bottom: none !important;`
+            ? `border-radius: 1px; outline :  1px solid ${props.theme.accent2}; border-bottom: none !important;`
             : ''}
     display: flex;
     width: 100%;
@@ -71,6 +71,10 @@ const Label = styled.label`
     align-items: center;
     width: 100%;
     user-select: none;
+
+    &:hover {
+        outline: 1px solid ${(props) => props.theme.accent2}99;
+    }
 
     @media ${device.mobileS} {
         font-size: 12px;
