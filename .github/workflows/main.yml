@@ -35,5 +35,5 @@ jobs:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   REMOTE_HOST: ${{ secrets.SERVER_IP }}
                   REMOTE_USER: ${{ secrets.REMOTE_USER }}
-                  TARGET: '/timewise-connect-frontend'
+                  TARGET: '/www'
                   EXCLUDE: '/dist/, /node_modules/'

@@ -9,10 +9,11 @@ import WeekView from './WeekView'
 import { MonthView } from './MonthView'
 import { TimeSelector } from './TimeSelector'
 import { AppointmentForm } from '../Form/AppointmentForm'
+import { $authStore } from '../../store/auth'
 
 export const Calendar = () => {
-    const { view, choosenDate } = useStore($calendarStore)
-    const { startDate } = useStore($calendarStore)
+    const { view, choosenDate, startDate } = useStore($calendarStore)
+    const { role } = useStore($authStore)
     const daysInView = 35
 
     const year = startDate.getUTCFullYear()
@@ -36,7 +37,7 @@ export const Calendar = () => {
                     {view === 'week' ? <WeekView /> : <MonthView />}
                     <TimeSelector />
                 </Container>
-                {!!choosenDate.getHours() && <AppointmentForm />}
+                {role !== 'ADMIN' && !!choosenDate.getHours() && <AppointmentForm />}
             </MainContainer>
         </>
     )

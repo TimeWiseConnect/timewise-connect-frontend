@@ -2,6 +2,7 @@ import { createEvent, createStore } from 'effector'
 import { validateFx } from '../api/auth/logIn'
 import { checkAuthFx } from '../api/auth/auth'
 import { addEventFx } from '../api/events/addEvent'
+import { $authStore, logOut } from './auth'
 
 export type Phase = 1 | 2 | 3 | 4 | 5
 export type Author = 'parent' | 'child'
@@ -111,3 +112,10 @@ export const $formStore = createStore<Form>(DEFAULT_STORE)
     .on(setDefault, () => DEFAULT_STORE)
     .on(setId, (oldState, id) => ({ ...oldState, id }))
     .on(addEventFx.doneData, (oldState) => ({ ...oldState, phase: 5 }))
+    .on(logOut, () => {
+        return DEFAULT_STORE
+    })
+
+$authStore.watch((state) => {
+    setPhone(state.phone)
+})

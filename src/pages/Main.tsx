@@ -27,7 +27,7 @@ export const Main = () => {
                 </Header>
             )}
             {window === 'management' && <Calendar />}
-            {window === 'appointments' && <Appointments />}
+            {role === 'ADMIN' && window === 'appointments' && <Appointments />}
         </Layout>
     )
 }

@@ -35,7 +35,10 @@ export const Appointments = () => {
                                 </TableCell>
                                 <TableCell>{event?.childName ? event.name : '-'}</TableCell>
                                 <TableCell>{event?.childName ? event.childName : event.name}</TableCell>
-                                <TableCell>{event.grade}</TableCell>
+                                <TableCell>
+                                    {event.grade}
+                                    {event.disability && ' с ОВЗ'}
+                                </TableCell>
                                 <TableCell>{event.request}</TableCell>
                                 <TableCell>{event.comment}</TableCell>
                                 <TableCell>+7{event.phone}</TableCell>

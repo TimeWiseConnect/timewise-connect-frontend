@@ -8,7 +8,7 @@ import { Arrow } from '../shared/icons/Arrow'
 import { FormButton } from '../../styles/FormButton'
 import { PhoneInput } from '../shared/PhoneInput'
 import { LogInRequest, makeACallFx } from '../../api/auth/logIn'
-import { $authStore } from '../../store/auth'
+import { $authStore, setAuthPhone } from '../../store/auth'
 import { addEventFx } from '../../api/events/addEvent'
 
 export const ThirdPhase = () => {
@@ -81,6 +81,7 @@ export const ThirdPhase = () => {
                             return
                         }
                         const req: LogInRequest = { type: 'LogIn', phone }
+                        setAuthPhone(phone)
                         makeACallFx(req)
                         nextPhase()
                     }}

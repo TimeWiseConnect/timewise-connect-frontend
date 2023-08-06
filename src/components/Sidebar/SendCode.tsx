@@ -1,7 +1,7 @@
 import React from 'react'
 import { $sidebarStore } from '../../store/sidebar'
 import { useStore } from 'effector-react'
-import { $authStore, setName, setPhone, setRegistration } from '../../store/auth'
+import { $authStore, setAuthPhone, setName, setRegistration } from '../../store/auth'
 import { PhoneInput } from '../shared/PhoneInput'
 import { Link } from '../../styles/Link'
 import { Button } from '../../styles/Button'
@@ -32,7 +32,12 @@ export const SendCode = () => {
                 </>
             ) : null}
             <Label>Телефон</Label>
-            <PhoneInput placeholder="+7" tabIndex={collapsed ? -1 : 0} value={phone} setValue={setPhone}></PhoneInput>
+            <PhoneInput
+                placeholder="+7"
+                tabIndex={collapsed ? -1 : 0}
+                value={phone}
+                setValue={setAuthPhone}
+            ></PhoneInput>
             <Text>
                 {registration ? 'Есть аккаунт? ' : 'Нет аккаунта? '}
                 <BR />

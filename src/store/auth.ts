@@ -4,6 +4,8 @@ import { UserResponse } from '../api/auth'
 import { setJwtToken } from '../api/auth/lib/jwt'
 import { makeACallFx, validateFx } from '../api/auth/logIn'
 import { getRoleFx } from '../api/roles/getRoles'
+import { $sidebarStore } from './sidebar'
+import { fetchEventsFx } from '../api/events/fetchEvents'
 
 interface UserStore {
     phase: 0 | 1 | 2
@@ -28,13 +30,13 @@ const DEFAULT_STORE: UserStore = {
 }
 
 export const logOut = createEvent()
-export const setPhone = createEvent<string>()
+export const setAuthPhone = createEvent<string>()
 export const setName = createEvent<string>()
 export const setPhase = createEvent<1 | 2>()
 export const setRegistration = createEvent<boolean>()
 
 export const $authStore = createStore<UserStore>(DEFAULT_STORE)
-    .on(setPhone, (state, phone) => ({
+    .on(setAuthPhone, (state, phone) => ({
         ...state,
         phone,
     }))
@@ -47,11 +49,14 @@ export const $authStore = createStore<UserStore>(DEFAULT_STORE)
         phase,
         error: null,
     }))
-    .on(checkAuthFx.doneData, (state, result) => ({
-        ...state,
-        isAuthenticated: true,
-        currentUser: result.user,
-    }))
+    .on(checkAuthFx.doneData, (state, result) => {
+        getRoleFx()
+        return {
+            ...state,
+            isAuthenticated: true,
+            currentUser: result.user,
+        }
+    })
     .on(checkAuthFx.failData, (state, error) => ({
         ...state,
         isAuthenticated: false,
@@ -85,18 +90,16 @@ export const $authStore = createStore<UserStore>(DEFAULT_STORE)
         ...state,
         error: error.message,
     }))
-    .on(logOut, (state) => {
+    .on(logOut, () => {
         setJwtToken('')
+        return DEFAULT_STORE
+    })
+    .on(getRoleFx.doneData, (state, role) => {
+        fetchEventsFx()
         return {
             ...state,
-            phase: 1,
-            isAuthenticated: false,
-            currentUser: null,
-            error: null,
-            registration: false,
+            role,
         }
     })
-    .on(getRoleFx.doneData, (state, role) => ({
-        ...state,
-        role,
-    }))
+
+$sidebarStore.watch(() => setRegistration(false))

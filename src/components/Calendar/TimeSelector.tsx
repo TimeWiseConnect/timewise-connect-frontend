@@ -61,24 +61,26 @@ export const TimeSelector = () => {
                                             <Text>вы записаны</Text>
                                         )}
                                     </AppointmentInfo>
-                                    {(!appointment.isAvailable ||
-                                        role === 'ADMIN' ||
-                                        (!!appointment.userId && appointment.userId === currentUser?.id)) && (
-                                        <InvisibleButton
-                                            onClick={(event) => {
-                                                event.currentTarget.blur()
-                                                if (appointment.isAvailable && role === 'ADMIN') {
-                                                    setDeleteWindowOpen(true)
-                                                } else {
-                                                    setClearAppointmentOpen(true)
-                                                }
-                                            }}
-                                        >
-                                            <Trash />
-                                        </InvisibleButton>
-                                    )}
-                                    {role === 'ADMIN' && <DeleteWindow eventId={appointment.id} />}
-                                    {role === 'ADMIN' && <ClearAppointment eventId={appointment.id} />}
+                                    {!appointment.isAvailable &&
+                                        (role === 'ADMIN' ||
+                                            (!!appointment.userId && appointment.userId === currentUser?.id)) && (
+                                            <>
+                                                <InvisibleButton
+                                                    onClick={(event) => {
+                                                        event.currentTarget.blur()
+                                                        if (appointment.isAvailable && role === 'ADMIN') {
+                                                            setDeleteWindowOpen(true)
+                                                        } else {
+                                                            setClearAppointmentOpen(true)
+                                                        }
+                                                    }}
+                                                >
+                                                    <Trash />
+                                                </InvisibleButton>
+                                                {<ClearAppointment eventId={appointment.id} />}
+                                                {role === 'ADMIN' && <DeleteWindow eventId={appointment.id} />}
+                                            </>
+                                        )}
                                 </Label>
                             </Time>
                         )
