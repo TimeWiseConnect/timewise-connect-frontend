@@ -35,5 +35,5 @@ jobs:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   REMOTE_HOST: ${{ secrets.SERVER_IP }}
                   REMOTE_USER: ${{ secrets.REMOTE_USER }}
-                  TARGET: '/www'
+                  TARGET: '/root/www/'
                   EXCLUDE: '/dist/, /node_modules/'
