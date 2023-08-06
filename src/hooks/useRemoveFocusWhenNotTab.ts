@@ -15,10 +15,10 @@ const handleClick = () => {
 const useRemoveFocusWhenNotTab = () => {
     useEffect(() => {
         window.addEventListener('keydown', handleTab)
-        window.addEventListener('click', handleClick)
+        window.addEventListener('mousedown', handleClick)
         return () => {
             window.removeEventListener('keydown', handleTab)
-            window.removeEventListener('click', handleClick)
+            window.removeEventListener('mousedown', handleClick)
         }
     })
 

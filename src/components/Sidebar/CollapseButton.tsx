@@ -13,8 +13,9 @@ export const CollapseButton = () => {
     return (
         <Button
             $isClosed={closed}
-            onClick={() => {
+            onClick={(event) => {
                 changeSidebarStatus(closed ? 'open' : 'closed')
+                if (!document.body.classList.contains('user-is-tabbing')) event.currentTarget.blur()
             }}
         >
             <SideButton />
