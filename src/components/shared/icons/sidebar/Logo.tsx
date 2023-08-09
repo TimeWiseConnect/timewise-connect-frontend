@@ -4,12 +4,12 @@ import { styled } from 'styled-components'
 import { device } from '../../../../styles/const'
 
 type Props = {
-    isCollapsed?: boolean
+    closed?: boolean
 }
 
-export const Logo = ({ isCollapsed }: Props) => (
+export const Logo = ({ closed }: Props) => (
     <SVG
-        $isCollapsed={isCollapsed}
+        $isCollapsed={closed}
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="28"

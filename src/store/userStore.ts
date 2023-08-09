@@ -4,8 +4,8 @@ import { UserResponse } from '../api/auth'
 import { setJwtToken } from '../api/auth/lib/jwt'
 import { makeACallFx, validateFx } from '../api/auth/logIn'
 import { getRoleFx } from '../api/roles/getRoles'
-import { $sidebarStore } from './sidebar'
 import { fetchEventsFx } from '../api/events/fetchEvents'
+import { setRegistration } from './sidebar'
 
 interface UserStore {
     phase: 0 | 1 | 2
@@ -14,7 +14,6 @@ interface UserStore {
     currentUser: UserResponse | null
     isAuthenticated: boolean | null
     error: string | null
-    registration: boolean
     role: string
 }
 
@@ -25,7 +24,6 @@ const DEFAULT_STORE: UserStore = {
     currentUser: null,
     error: null,
     isAuthenticated: false,
-    registration: false,
     role: '',
 }
 
@@ -33,9 +31,8 @@ export const logOut = createEvent()
 export const setAuthPhone = createEvent<string>()
 export const setName = createEvent<string>()
 export const setPhase = createEvent<1 | 2>()
-export const setRegistration = createEvent<boolean>()
 
-export const $authStore = createStore<UserStore>(DEFAULT_STORE)
+export const $userStore = createStore<UserStore>(DEFAULT_STORE)
     .on(setAuthPhone, (state, phone) => ({
         ...state,
         phone,
@@ -49,26 +46,16 @@ export const $authStore = createStore<UserStore>(DEFAULT_STORE)
         phase,
         error: null,
     }))
-    .on(checkAuthFx.doneData, (state, result) => {
-        getRoleFx()
-        return {
-            ...state,
-            isAuthenticated: true,
-            currentUser: result.user,
-        }
-    })
+    .on(checkAuthFx.doneData, (state, result) => ({
+        ...state,
+        isAuthenticated: true,
+        currentUser: result.user,
+    }))
     .on(checkAuthFx.failData, (state, error) => ({
         ...state,
         isAuthenticated: false,
         error: error.message,
     }))
-    .on(setRegistration, (state, registration) => {
-        return {
-            ...state,
-            registration,
-            error: null,
-        }
-    })
     .on(makeACallFx.doneData, (state) => ({
         ...state,
         phase: 2,
@@ -94,12 +81,8 @@ export const $authStore = createStore<UserStore>(DEFAULT_STORE)
         setJwtToken('')
         return DEFAULT_STORE
     })
-    .on(getRoleFx.doneData, (state, role) => {
-        fetchEventsFx()
-        return {
-            ...state,
-            role,
-        }
-    })
-
-$sidebarStore.watch(() => setRegistration(false))
+    .on(getRoleFx.doneData, (state, role) => ({
+        ...state,
+        role,
+    }))
+    .on(setRegistration, (state) => ({ ...state, error: null }))

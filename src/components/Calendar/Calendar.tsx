@@ -9,11 +9,11 @@ import WeekView from './WeekView'
 import { MonthView } from './MonthView'
 import { TimeSelector } from './TimeSelector'
 import { AppointmentForm } from '../Form/AppointmentForm'
-import { $authStore } from '../../store/auth'
+import { $userStore } from '../../store/userStore'
 
 export const Calendar = () => {
     const { view, choosenDate, startDate } = useStore($calendarStore)
-    const { role } = useStore($authStore)
+    const { role } = useStore($userStore)
     const daysInView = 35
 
     const year = startDate.getUTCFullYear()

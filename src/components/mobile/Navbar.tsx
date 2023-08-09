@@ -7,7 +7,7 @@ import { Close } from '../shared/icons/Close'
 import { $sidebarStore, changeSidebarStatus } from '../../store/sidebar'
 
 export const Navbar = () => {
-    const collapsed = useStore($sidebarStore) === 'closed'
+    const collapsed = useStore($sidebarStore).closed === 'closed'
 
     return (
         <NavbarLayout>

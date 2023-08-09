@@ -6,16 +6,19 @@ import { $calendarStore } from '../../store/calendar'
 import { device } from '../../styles/const'
 
 export const MonthView = () => {
-    const { startDate } = useStore($calendarStore)
+    const { startDate, choosenDate } = useStore($calendarStore)
     const daysInView = 35
 
     const year = startDate.getUTCFullYear()
     const month = startDate.getUTCMonth()
     const date = startDate.getUTCDate()
+    console.log(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()))
+    console.log(new Date(choosenDate.getFullYear(), choosenDate.getMonth(), choosenDate.getDate()))
 
     const days: Date[] = Array(daysInView)
 
-    const startDay = new Date(year, month, 1).getDay() % 7
+    let startDay = (new Date(year, month, date).getDay() % 7) - 1
+    if (startDay < 0) startDay = 6
     for (let i = 0; i <= startDay; i++) days[startDay - i] = new Date(year, month, date - i)
     for (let i = 0; i < daysInView - startDay; i++) days[startDay + i] = new Date(year, month, date + i)
 

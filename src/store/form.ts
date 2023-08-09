@@ -2,7 +2,7 @@ import { createEvent, createStore } from 'effector'
 import { validateFx } from '../api/auth/logIn'
 import { checkAuthFx } from '../api/auth/auth'
 import { addEventFx } from '../api/events/addEvent'
-import { $authStore, logOut } from './auth'
+import { $userStore, logOut } from './userStore'
 
 export type Phase = 1 | 2 | 3 | 4 | 5
 export type Author = 'parent' | 'child'
@@ -116,6 +116,6 @@ export const $formStore = createStore<Form>(DEFAULT_STORE)
         return DEFAULT_STORE
     })
 
-$authStore.watch((state) => {
+$userStore.watch((state) => {
     setPhone(state.phone)
 })

@@ -1,5 +1,6 @@
 import { createEvent, createStore } from 'effector'
 import { clearEventFx } from '../api/events/clearEvent'
+import { logOut } from './userStore'
 
 interface ClearAppointmentStore {
     open: boolean
@@ -29,3 +30,6 @@ export const $clearAppointmentStore = createStore<ClearAppointmentStore>(DEFAULT
         ...state,
         error: error.message,
     }))
+    .on(logOut, () => {
+        return DEFAULT_STORE
+    })

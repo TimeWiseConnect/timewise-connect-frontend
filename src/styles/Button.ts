@@ -8,6 +8,8 @@ export const Button = styled.button`
     border: none;
     cursor: pointer;
     white-space: nowrap;
+    width: 100%;
+    margin-top: 10px;
 
     @media (hover: hover) {
         &:focus {

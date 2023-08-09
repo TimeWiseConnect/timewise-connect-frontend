@@ -1,15 +1,15 @@
 import { useStore } from 'effector-react'
 import React from 'react'
 import { styled } from 'styled-components'
-import { $authStore } from '../../store/auth'
 import { $sidebarStore } from '../../store/sidebar'
 import { device } from '../../styles/const'
 import { InvisibleButton } from '../../styles/InvisibleButton'
 import { Settings } from '../shared/icons/sidebar/Settings'
+import { $userStore } from '../../store/userStore'
 
 export const Account = () => {
-    const { currentUser, role } = useStore($authStore)
-    const collapsed = useStore($sidebarStore) === 'closed'
+    const { currentUser, role } = useStore($userStore)
+    const collapsed = useStore($sidebarStore).closed === 'closed'
 
     return (
         <Layout>

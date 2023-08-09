@@ -3,14 +3,16 @@ import { styled } from 'styled-components'
 import { Link } from '../../styles/Link'
 import { device } from '../../styles/const'
 import { Button } from '../../styles/Button'
-import { $authStore, setPhase } from '../../store/auth'
+import { $userStore, setPhase } from '../../store/userStore'
 import { validateFx } from '../../api/auth/logIn'
 import { useStore } from 'effector-react'
+import { $sidebarStore } from '../../store/sidebar'
 
 export const ValidateCode = () => {
     const [timer, setTimer] = useState(5)
     const [code, setCode] = useState('')
-    const { phone, registration, error } = useStore($authStore)
+    const { phone, error } = useStore($userStore)
+    const { registration } = useStore($sidebarStore)
 
     useEffect(() => {
         let intervalId: NodeJS.Timer | undefined
@@ -28,21 +30,28 @@ export const ValidateCode = () => {
                 validateFx({ phone, code })
             }}
         >
-            <Text>Звоним на указанный номер. Введите последние 4 цифры номера, с которого поступит звонок.</Text>
-            {!!timer && <Text>Перезвонить можно через {timer} секунд.</Text>}
-            {!timer && (
-                <Text>
-                    Не пришло? <Link>Отправить ещё раз</Link>
-                </Text>
-            )}
+            <Text>
+                {!!timer && `В течение ${timer} секунд на указанный номер поступит звонок.`} Введите последние 4 цифры
+                номера входящего звонка. Отвечать на звонок не нужно.
+                <br />
+                {!timer && (
+                    <>
+                        Не позвонили? <Link onClick={() => setTimer(5)}>Попробовать ещё раз</Link>.
+                    </>
+                )}
+            </Text>
             <Link onClick={() => setPhase(1)}>Вернутся к набору номера</Link>
             <Input
                 maxLength={4}
                 value={code}
-                placeholder="Введите последние 4 цифры"
+                placeholder="Введите 4 цифры"
                 onChange={(e) => setCode(e.target.value.replaceAll(/\D/g, ''))}
             />
-            {!!error && <ErrorMessage>{error}</ErrorMessage>}
+            {!!error && (error === 'Internal server error' || error === 'Network Error') ? (
+                <ErrorMessage>Сервер не отвечает. Попробуйте позже.</ErrorMessage>
+            ) : (
+                <ErrorMessage>{error}</ErrorMessage>
+            )}
             <Button
                 disabled={code.length !== 4}
                 type="submit"
@@ -59,14 +68,16 @@ export const ValidateCode = () => {
 const Text = styled.div`
     font-size: 14px;
     line-height: 130%;
+    margin-bottom: 10px;
 `
-export const ErrorMessage = styled(Text)`
-    margin-bottom: 5px;
+export const ErrorMessage = styled.div`
+    font-size: 14px;
+    line-height: 130%;
+    margin-top: 5px;
     color: ${(props) => props.theme.danger};
 `
 
 const Layout = styled.form`
-    gap: 10px;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -100,7 +111,8 @@ const Input = styled.input`
         height: 40px;
         padding-left: 10px;
         font-size: 12px;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
+        margin-top: 20px;
     }
 
     @media ${device.laptop} {

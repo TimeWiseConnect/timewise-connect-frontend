@@ -6,7 +6,7 @@ import { Moon } from './icons/sidebar/Moon'
 import { Text } from '../../styles/Text'
 import { Sun } from './icons/sidebar/Sun'
 
-const ThemeSwitch = ({ isCollapsed }: { isCollapsed: boolean }) => {
+const ThemeSwitch = ({ closed }: { closed: boolean }) => {
     const theme = useStore($themeStore)
     return (
         <div>
@@ -18,7 +18,7 @@ const ThemeSwitch = ({ isCollapsed }: { isCollapsed: boolean }) => {
                     }}
                 >
                     <Moon />
-                    {!isCollapsed && <Text>Темная тема</Text>}
+                    {!closed && <Text>Темная тема</Text>}
                 </InvisibleButton>
             ) : (
                 <InvisibleButton
@@ -28,7 +28,7 @@ const ThemeSwitch = ({ isCollapsed }: { isCollapsed: boolean }) => {
                     }}
                 >
                     <Sun />
-                    {!isCollapsed && <Text>Светлая тема</Text>}
+                    {!closed && <Text>Светлая тема</Text>}
                 </InvisibleButton>
             )}
         </div>

@@ -4,14 +4,16 @@ import ThemeSwitch from '../shared/ThemeSwitch'
 import { MobileFooter } from '../Footer/MobileFooter'
 import { LoginForm } from '../Sidebar/LoginForm'
 import { useStore } from 'effector-react'
-import { $authStore, logOut } from '../../store/auth'
+import { $userStore, logOut } from '../../store/userStore'
 import { Account } from '../Sidebar/Account'
 import { InvisibleButton } from '../../styles/InvisibleButton'
 import { LogOut } from '../shared/icons/sidebar/LogOut'
 import { Text } from '../../styles/Text'
+import { $sidebarStore } from '../../store/sidebar'
 
 export const LogIn = () => {
-    const { registration, isAuthenticated } = useStore($authStore)
+    const { isAuthenticated } = useStore($userStore)
+    const { registration } = useStore($sidebarStore)
     return (
         <Layout>
             <SideBar>
@@ -24,7 +26,7 @@ export const LogIn = () => {
                             <LoginForm />
                         </HeadWrap>
                         <FootWrap>
-                            <ThemeSwitch isCollapsed={false} />
+                            <ThemeSwitch closed={false} />
                             {isAuthenticated && (
                                 <InvisibleButton onClick={() => logOut()}>
                                     <LogOut /> <Text>Выйти из аккаунта</Text>

@@ -6,7 +6,7 @@ import { useStore } from 'effector-react'
 import { $sidebarStore } from '../../store/sidebar'
 
 const Mobile = () => {
-    const collapsed = useStore($sidebarStore) === 'closed'
+    const collapsed = useStore($sidebarStore).closed === 'closed'
 
     return (
         <Layout $isCollapsed={collapsed}>

@@ -1,5 +1,6 @@
 import { createEvent, createStore } from 'effector'
 import { deleteEventFx } from '../api/events/deleteEvent'
+import { logOut } from './userStore'
 
 interface DeleteWindowStore {
     open: boolean
@@ -29,3 +30,6 @@ export const $deleteWindowStore = createStore<DeleteWindowStore>(DEFAULT_STORE)
         ...state,
         error: error.message,
     }))
+    .on(logOut, () => {
+        return DEFAULT_STORE
+    })

@@ -8,11 +8,11 @@ import { device } from '../../styles/const'
 import { AlwaysAccentFillPath } from '../shared/paths/AlwaysAccentFillPath'
 
 export const CollapseButton = () => {
-    const closed = useStore($sidebarStore) === 'closed'
+    const closed = useStore($sidebarStore).closed === 'closed'
 
     return (
         <Button
-            $isClosed={closed}
+            $closed={closed}
             onClick={(event) => {
                 changeSidebarStatus(closed ? 'open' : 'closed')
                 if (!document.body.classList.contains('user-is-tabbing')) event.currentTarget.blur()
@@ -23,9 +23,9 @@ export const CollapseButton = () => {
     )
 }
 
-const Button = styled(InvisibleButton)<{ $isClosed: boolean }>`
+const Button = styled(InvisibleButton)<{ $closed: boolean }>`
     position: absolute;
-    ${(props) => (props.$isClosed ? '' : 'rotate: 180deg;')}
+    ${(props) => (props.$closed ? '' : 'rotate: 180deg;')}
 
     transition:
         500ms right,
@@ -33,11 +33,11 @@ const Button = styled(InvisibleButton)<{ $isClosed: boolean }>`
         300ms color;
 
     @media ${device.tablet} {
-        right: calc(${(props) => (props.$isClosed ? '60px' : '180px')} - 13px);
+        right: calc(${(props) => (props.$closed ? '60px' : '180px')} - 13px);
     }
 
     @media ${device.laptop} {
-        right: calc(${(props) => (props.$isClosed ? '75px' : '328px')} - 13px);
+        right: calc(${(props) => (props.$closed ? '75px' : '328px')} - 13px);
     }
 
     @media (hover: hover) {

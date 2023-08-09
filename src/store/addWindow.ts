@@ -2,6 +2,7 @@ import { createEvent, createStore } from 'effector'
 import { formatDateToYYYYMMDD } from '../utils/dateTimeUtils'
 import { createEventFx } from '../api/events/createEvent'
 import { $calendarStore } from './calendar'
+import { logOut } from './userStore'
 
 interface AddWindowStore {
     open: boolean
@@ -45,6 +46,9 @@ export const $addWindowStore = createStore<AddWindowStore>(DEFAULT_STORE)
         ...state,
         error: error.message,
     }))
+    .on(logOut, () => {
+        return DEFAULT_STORE
+    })
 
 $calendarStore.watch((state) => {
     setDate(formatDateToYYYYMMDD(state.choosenDate))

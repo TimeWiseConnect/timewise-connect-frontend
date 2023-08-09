@@ -97,7 +97,7 @@ const DefaultInput = styled.input`
         height: 40px;
         padding-left: 10px;
         font-size: 12px;
-        margin-bottom: 20px;
+        margin-bottom: 0;
     }
 
     @media ${device.laptop} {

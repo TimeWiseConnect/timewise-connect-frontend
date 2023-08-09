@@ -5,7 +5,7 @@ import { useStore } from 'effector-react'
 import { $calendarStore, SwitcherType, chooseDate } from '../../store/calendar'
 import { device } from '../../styles/const'
 import { $eventStore } from '../../store/events'
-import { $authStore } from '../../store/auth'
+import { $userStore } from '../../store/userStore'
 import { FormButton } from '../../styles/FormButton'
 import { setId } from '../../store/form'
 import { InvisibleButton } from '../../styles/InvisibleButton'
@@ -21,7 +21,7 @@ import { $addWindowStore, setAddWindowOpen } from '../../store/addWindow'
 export const TimeSelector = () => {
     const { choosenDate, view } = useStore($calendarStore)
     const { events } = useStore($eventStore)
-    const { currentUser, role } = useStore($authStore)
+    const { currentUser, role } = useStore($userStore)
     const { action, date, time, open } = useStore($addWindowStore)
 
     const currentEvents = events

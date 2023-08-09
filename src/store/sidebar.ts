@@ -1,12 +1,27 @@
 import { createEvent, createStore } from 'effector'
 
-export type SidebarStatus = 'closed' | 'open'
+type SidebarStatus = 'closed' | 'open'
 
-const DEFAULT_STORE: SidebarStatus = 'closed'
+export type SidebarStore = {
+    closed: SidebarStatus
+    registration: boolean
+}
+
+const DEFAULT_STORE: SidebarStore = {
+    closed: 'closed',
+    registration: false,
+}
 
 export const changeSidebarStatus = createEvent<SidebarStatus>()
+export const setRegistration = createEvent<boolean>()
 
-export const $sidebarStore = createStore<SidebarStatus>(DEFAULT_STORE).on(
-    changeSidebarStatus,
-    (_, newState) => newState,
-)
+export const $sidebarStore = createStore<SidebarStore>(DEFAULT_STORE)
+    .on(changeSidebarStatus, (state, closed) => ({
+        ...state,
+        registration: false,
+        closed,
+    }))
+    .on(setRegistration, (state, registration) => ({
+        ...state,
+        registration,
+    }))

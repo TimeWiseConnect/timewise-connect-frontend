@@ -2,15 +2,15 @@ import React, { useEffect } from 'react'
 import { styled } from 'styled-components'
 import { device } from '../styles/const'
 import { useStore } from 'effector-react'
-import { $authStore } from '../store/auth'
 import { WindowSwitch } from '../components/Admin/WindowSwitch'
 import { $windowStore } from '../store/window'
 import { Calendar } from '../components/Calendar/Calendar'
 import { Appointments } from '../components/Appointments/Appointments'
 import { fetchEventsFx } from '../api/events/fetchEvents'
+import { $userStore } from '../store/userStore'
 
 export const Main = () => {
-    const { role } = useStore($authStore)
+    const { role } = useStore($userStore)
     const window = useStore($windowStore)
 
     useEffect(() => {

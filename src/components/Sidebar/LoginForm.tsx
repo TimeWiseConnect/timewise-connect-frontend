@@ -1,14 +1,14 @@
 import React from 'react'
 import { useStore } from 'effector-react'
 import { SendCode } from './SendCode'
-import { $authStore } from '../../store/auth'
 import { ValidateCode } from './ValidateCode'
 import { $sidebarStore } from '../../store/sidebar'
 import { styled } from 'styled-components'
+import { $userStore } from '../../store/userStore'
 
 export const LoginForm = () => {
-    const { phase } = useStore($authStore)
-    const collapsed = useStore($sidebarStore) === 'closed'
+    const { phase } = useStore($userStore)
+    const collapsed = useStore($sidebarStore).closed === 'closed'
 
     return (
         <Layout $isCollapsed={collapsed}>

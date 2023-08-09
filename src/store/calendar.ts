@@ -12,7 +12,7 @@ const today = new Date()
 
 const DEFAULT_STORE: Calendar = {
     view: (localStorage.getItem('view') as SwitcherType) || 'week',
-    choosenDate: new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()),
+    choosenDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
     startDate: new Date(),
 }
 

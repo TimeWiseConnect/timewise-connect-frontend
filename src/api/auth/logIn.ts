@@ -4,12 +4,10 @@ import { setJwtToken } from './lib/jwt'
 import axios from 'axios'
 
 export type LogInRequest = {
-    type: 'LogIn'
     phone: string
 }
 
 export type RegistrationRequest = {
-    type: 'Registration'
     phone: string
     name: string
 }
@@ -19,12 +17,8 @@ type ValidateRequest = {
     code: string
 }
 
-const logIn = (req: LogInRequest) => {
+const logIn = (req: LogInRequest | RegistrationRequest) => {
     return $api.post('/auth/login', req)
-}
-
-const reg = (req: RegistrationRequest) => {
-    return $api.post('/auth/reg', req)
 }
 
 const validate = (req: ValidateRequest) => {
@@ -33,18 +27,13 @@ const validate = (req: ValidateRequest) => {
 
 export const makeACallFx = createEffect(async (req: LogInRequest | RegistrationRequest) => {
     try {
-        switch (req.type) {
-            case 'LogIn':
-                await logIn(req)
-                break
-            case 'Registration':
-                await reg(req)
-                break
-        }
+        await logIn(req)
     } catch (error) {
         console.log(error)
-        if (axios.isAxiosError(error)) throw new Error(error?.response?.data.message)
-        else throw new Error('Возникла какая-то ошибка. Попробуйте позже')
+        if (axios.isAxiosError(error)) {
+            if (error?.response) throw new Error(error?.response?.data.message)
+            else throw new Error(error.message)
+        } else throw new Error('Возникла какая-то ошибка. Попробуйте позже')
     }
 })
 
@@ -54,8 +43,9 @@ export const validateFx = createEffect(async (req: ValidateRequest) => {
         setJwtToken(data.token)
         return data
     } catch (error) {
-        console.log(error)
-        if (axios.isAxiosError(error)) throw new Error(error?.response?.data.message)
-        else throw new Error('Возникла какая-то ошибка. Попробуйте позже')
+        if (axios.isAxiosError(error)) {
+            if (error?.response) throw new Error(error?.response?.data.message)
+            else throw new Error(error.message)
+        } else throw new Error('Возникла какая-то ошибка. Попробуйте позже')
     }
 })

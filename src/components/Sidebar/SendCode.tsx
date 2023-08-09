@@ -1,7 +1,7 @@
 import React from 'react'
-import { $sidebarStore } from '../../store/sidebar'
+import { $sidebarStore, setRegistration } from '../../store/sidebar'
 import { useStore } from 'effector-react'
-import { $authStore, setAuthPhone, setName, setRegistration } from '../../store/auth'
+import { $userStore, setAuthPhone, setName } from '../../store/userStore'
 import { PhoneInput } from '../shared/PhoneInput'
 import { Link } from '../../styles/Link'
 import { Button } from '../../styles/Button'
@@ -11,17 +11,16 @@ import { LogInRequest, RegistrationRequest, makeACallFx } from '../../api/auth/l
 import { ErrorMessage } from './ValidateCode'
 
 export const SendCode = () => {
-    const collapsed = useStore($sidebarStore) === 'closed'
-    const { phone, registration, name, error } = useStore($authStore)
+    const collapsed = useStore($sidebarStore).closed === 'closed'
+    const { phone, name, error } = useStore($userStore)
+    const { registration } = useStore($sidebarStore)
 
     return (
         <LoginFormLayout
             $isCollapsed={collapsed}
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault()
-                const req: LogInRequest | RegistrationRequest = registration
-                    ? { type: 'Registration', phone, name }
-                    : { type: 'LogIn', phone }
+                const req: LogInRequest | RegistrationRequest = registration ? { phone, name } : { phone }
                 makeACallFx(req)
             }}
         >
@@ -53,7 +52,19 @@ export const SendCode = () => {
                     {registration ? 'Войдите' : 'Зарегистрируйтесь'}
                 </Link>
             </Text>
-            {!!error && <ErrorMessage>{error}</ErrorMessage>}
+            {!!registration && (
+                <SmallText>
+                    Нажимая на кнопку, вы соглашаетесь с <Link>политикой конфиденциальности</Link> и 
+                    <Link>условиями предоставления услуг</Link>.
+                </SmallText>
+            )}
+            {!!error && error === 'Укажите ваше имя' ? (
+                <ErrorMessage>Аккаунт не найден.</ErrorMessage>
+            ) : error === 'Internal server error' || error === 'Network Error' ? (
+                <ErrorMessage>Сервер не отвечает. Попробуйте позже.</ErrorMessage>
+            ) : (
+                <ErrorMessage>{error}</ErrorMessage>
+            )}
             <Button
                 disabled={phone.length !== 10}
                 tabIndex={collapsed ? -1 : 0}
@@ -62,7 +73,7 @@ export const SendCode = () => {
                     event.currentTarget.blur()
                 }}
             >
-                Отправить СМС
+                {registration ? 'Зарегистрироваться' : 'Отправить СМС'}
             </Button>
         </LoginFormLayout>
     )
@@ -109,7 +120,8 @@ const Text = styled.p`
     }
 
     @media ${device.tablet} {
-        margin-bottom: 10px;
+        margin-bottom: 0;
+        margin-top: 20px;
     }
 
     @media ${device.laptop} {
@@ -164,4 +176,10 @@ const Input = styled.input`
         padding-left: 20px;
         font-size: 14px;
     }
+`
+
+const SmallText = styled.p`
+    margin-top: 20px;
+    font-size: 12px;
+    line-height: 130%;
 `
