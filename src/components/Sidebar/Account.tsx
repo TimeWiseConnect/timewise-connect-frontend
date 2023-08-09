@@ -46,8 +46,8 @@ const Header = styled.div<Props>`
 
 const Avatar = styled.div<Props>`
     border-radius: 50%;
-    background-color: ${(props) => props.theme.main};
-    ${(props) => (props.$admin ? `outline: 2px solid ${props.theme.accent2};` : '')}
+    border: 1px solid ${(props) => props.theme.main};
+    ${(props) => (props.$admin ? `outline: 2px solid ${props.theme.accent2}; border: none;` : '')}
 
     @media ${device.mobileS} {
         width: 50px;
