@@ -4,7 +4,6 @@ import { UserResponse } from '../api/auth'
 import { setJwtToken } from '../api/auth/lib/jwt'
 import { makeACallFx, validateFx } from '../api/auth/logIn'
 import { getRoleFx } from '../api/roles/getRoles'
-import { fetchEventsFx } from '../api/events/fetchEvents'
 import { setRegistration } from './sidebar'
 
 interface UserStore {
