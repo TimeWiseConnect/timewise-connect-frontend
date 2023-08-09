@@ -25,6 +25,7 @@ type SidebarProps = {
 const animationSpeed = '500ms'
 
 const SidebarLayout = styled.div<SidebarProps>`
+    z-index: 1000;
     position: fixed;
     right: 0;
     top: 0;
