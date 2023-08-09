@@ -3,12 +3,19 @@ import React from 'react'
 import { styled } from 'styled-components'
 import { $eventStore } from '../../store/events'
 import { formatDateWord, getTimeFromDate } from '../../utils/dateTimeUtils'
+import { Trash } from '../shared/icons/admin/Trash'
+import { InvisibleButton } from '../../styles/InvisibleButton'
+import { setDeleteWindowOpen } from '../../store/deleteWindow'
+import { setClearAppointmentId, setClearAppointmentOpen } from '../../store/clearAppointment'
+import { DeleteWindow } from '../Admin/Modals/DeleteWindow'
+import { ClearAppointment } from '../Admin/Modals/ClearAppointment'
 
 export const Appointments = () => {
     const { events } = useStore($eventStore)
 
     return (
         <Layout>
+            {<ClearAppointment />}
             <TableHeaderRow>
                 <TableHeader>Дата</TableHeader>
                 <TableHeader>Имя родителя</TableHeader>
@@ -46,6 +53,19 @@ export const Appointments = () => {
                                 <TableCell>
                                     <TableHeader>В разработке</TableHeader>
                                 </TableCell>
+                                <InvisibleButton
+                                    onClick={(e) => {
+                                        e.currentTarget.blur()
+                                        if (event.isAvailable) {
+                                            setDeleteWindowOpen(true)
+                                        } else {
+                                            setClearAppointmentOpen(true)
+                                            setClearAppointmentId(event.id)
+                                        }
+                                    }}
+                                >
+                                    <Trash />
+                                </InvisibleButton>
                             </TableRow>
                         )
                     })
@@ -63,7 +83,7 @@ const Layout = styled.div`
 const TableHeaderRow = styled.div`
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(3, 3fr) 2fr repeat(2, 5fr) repeat(2, 3fr) 6fr;
+    grid-template-columns: repeat(3, 3fr) 2fr repeat(2, 5fr) repeat(2, 3fr) 6fr 20px;
     padding-bottom: 3px;
     margin-bottom: 20px;
     gap: 5px;

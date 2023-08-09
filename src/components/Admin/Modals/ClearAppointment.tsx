@@ -4,8 +4,8 @@ import { useStore } from 'effector-react'
 import { $clearAppointmentStore, setClearAppointmentOpen } from '../../../store/clearAppointment'
 import { clearEventFx } from '../../../api/events/clearEvent'
 
-export const ClearAppointment = ({ eventId }: { eventId: number }) => {
-    const { open } = useStore($clearAppointmentStore)
+export const ClearAppointment = () => {
+    const { open, eventId } = useStore($clearAppointmentStore)
 
     return (
         <Modal
@@ -15,7 +15,7 @@ export const ClearAppointment = ({ eventId }: { eventId: number }) => {
             agree="Да"
             disagree="Нет"
             action={() => {
-                clearEventFx(eventId)
+                eventId && clearEventFx(eventId)
             }}
         />
     )

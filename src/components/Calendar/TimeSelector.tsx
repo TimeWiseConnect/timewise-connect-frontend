@@ -12,8 +12,8 @@ import { InvisibleButton } from '../../styles/InvisibleButton'
 import { Trash } from '../shared/icons/admin/Trash'
 import Modal from '../shared/Modal'
 import { AddWindow } from '../Admin/AddWindow'
-import { setDeleteWindowOpen } from '../../store/deleteWindow'
-import { setClearAppointmentOpen } from '../../store/clearAppointment'
+import { setDeleteWindowOpen, setEventId } from '../../store/deleteWindow'
+import { setClearAppointmentId, setClearAppointmentOpen } from '../../store/clearAppointment'
 import { DeleteWindow } from '../Admin/Modals/DeleteWindow'
 import { ClearAppointment } from '../Admin/Modals/ClearAppointment'
 import { $addWindowStore, setAddWindowOpen } from '../../store/addWindow'
@@ -30,6 +30,9 @@ export const TimeSelector = () => {
 
     return (
         <Layout $view={view}>
+            {<ClearAppointment />}
+            {role === 'ADMIN' && <DeleteWindow />}
+
             <Header $view={view}>{formatDateWord(choosenDate)}</Header>
             <Appointments $view={view}>
                 {currentEvents.length === 0 ? (
@@ -69,15 +72,15 @@ export const TimeSelector = () => {
                                                     event.currentTarget.blur()
                                                     if (appointment.isAvailable && role === 'ADMIN') {
                                                         setDeleteWindowOpen(true)
+                                                        setEventId(appointment.id)
                                                     } else {
                                                         setClearAppointmentOpen(true)
+                                                        setClearAppointmentId(appointment.id)
                                                     }
                                                 }}
                                             >
                                                 <Trash />
                                             </InvisibleButton>
-                                            {<ClearAppointment eventId={appointment.id} />}
-                                            {role === 'ADMIN' && <DeleteWindow eventId={appointment.id} />}
                                         </>
                                     )}
                                 </Label>
