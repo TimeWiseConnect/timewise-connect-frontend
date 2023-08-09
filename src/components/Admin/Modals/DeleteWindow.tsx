@@ -4,8 +4,8 @@ import { $deleteWindowStore, setDeleteWindowOpen } from '../../../store/deleteWi
 import { useStore } from 'effector-react'
 import { deleteEventFx } from '../../../api/events/deleteEvent'
 
-export const DeleteWindow = ({ eventId }: { eventId: number }) => {
-    const { open } = useStore($deleteWindowStore)
+export const DeleteWindow = () => {
+    const { open, eventId } = useStore($deleteWindowStore)
 
     return (
         <Modal
@@ -15,7 +15,7 @@ export const DeleteWindow = ({ eventId }: { eventId: number }) => {
             agree="Да"
             disagree="Нет"
             action={() => {
-                deleteEventFx(eventId)
+                eventId && deleteEventFx(eventId)
             }}
         />
     )
