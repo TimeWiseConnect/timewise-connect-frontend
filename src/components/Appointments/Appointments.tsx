@@ -7,7 +7,6 @@ import { Trash } from '../shared/icons/admin/Trash'
 import { InvisibleButton } from '../../styles/InvisibleButton'
 import { setDeleteWindowOpen } from '../../store/deleteWindow'
 import { setClearAppointmentId, setClearAppointmentOpen } from '../../store/clearAppointment'
-import { DeleteWindow } from '../Admin/Modals/DeleteWindow'
 import { ClearAppointment } from '../Admin/Modals/ClearAppointment'
 
 export const Appointments = () => {
