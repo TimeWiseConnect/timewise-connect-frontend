@@ -37,7 +37,7 @@ const Layout = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: 100dvh;
     width: 100%;
     color: ${(props) => props.theme.main};
     background-color: ${(props) => props.theme.mobileBg};
