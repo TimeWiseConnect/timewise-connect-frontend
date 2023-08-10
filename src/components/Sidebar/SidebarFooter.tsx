@@ -44,6 +44,7 @@ const Layout = styled.div<{ $closed: boolean }>`
         align-items: center;
         ${(props) => (props.$closed ? '' : 'padding: 0px 20px;')};
         gap: 10px;
+        margin-bottom: 0;
     }
 
     @media ${device.laptop} {
