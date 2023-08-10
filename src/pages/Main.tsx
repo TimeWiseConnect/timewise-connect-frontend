@@ -8,17 +8,19 @@ import { Calendar } from '../components/Calendar/Calendar'
 import { Appointments } from '../components/Appointments/Appointments'
 import { fetchEventsFx } from '../api/events/fetchEvents'
 import { $userStore } from '../store/userStore'
+import { $sidebarStore } from '../store/sidebar'
 
 export const Main = () => {
     const { role } = useStore($userStore)
     const window = useStore($windowStore)
+    const closed = useStore($sidebarStore).closed === 'closed'
 
     useEffect(() => {
         fetchEventsFx()
     }, [])
 
     return (
-        <Layout>
+        <Layout $collapsed={closed}>
             {role === 'ADMIN' ? (
                 <WindowSwitch />
             ) : (
@@ -32,15 +34,17 @@ export const Main = () => {
     )
 }
 
-const Layout = styled.div`
+const Layout = styled.div<{ $collapsed: boolean }>`
     color: ${(props) => props.theme.main};
     width: 100%;
 
     @media ${device.mobileS} {
+        display: ${(props) => (props.$collapsed ? '' : 'none')};
         padding: 10px 16px;
     }
 
     @media ${device.tablet} {
+        display: block;
         padding: 60px 70px;
     }
 

@@ -103,7 +103,6 @@ const Layout = styled.div`
         height: 100%;
         left: 0;
         top: 0;
-        z-index: 5;
     }
 
     @media ${device.laptopL} {
@@ -111,6 +110,7 @@ const Layout = styled.div`
         height: fit-content;
         position: relative;
         display: block;
+        z-index: 1500;
     }
 `
 

@@ -14,6 +14,7 @@ interface ModalProps {
 }
 
 const ModalOverlay = styled.div<{ $isOpen: boolean }>`
+    z-index: 1500;
     position: fixed;
     top: 0;
     left: 0;
@@ -23,7 +24,6 @@ const ModalOverlay = styled.div<{ $isOpen: boolean }>`
     display: ${(props) => (props.$isOpen ? 'flex' : 'none')};
     justify-content: center;
     align-items: center;
-    z-index: 1000;
 `
 
 const ModalContent = styled.div`
