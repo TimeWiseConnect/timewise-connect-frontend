@@ -28,13 +28,20 @@ export const SidebarFooter = () => {
 }
 const Layout = styled.div<{ $closed: boolean }>`
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: column;
     width: 100%;
     overflow: hidden;
 
+    @media ${device.mobileS} {
+        align-items: start;
+        gap: 16px;
+        margin-bottom: 40px;
+        color: ${(props) => props.theme.main};
+    }
+
     @media ${device.tablet} {
+        align-items: center;
         ${(props) => (props.$closed ? '' : 'padding: 0px 20px;')};
         gap: 10px;
     }
