@@ -4,7 +4,7 @@ import { areDatesEqual, formatDateWord, getTimeFromDate, isTimeEqual } from '../
 import { useStore } from 'effector-react'
 import { $calendarStore, SwitcherType, chooseDate } from '../../store/calendar'
 import { device } from '../../styles/const'
-import { $eventStore } from '../../store/events'
+import { $eventStore, Event } from '../../store/events'
 import { $userStore } from '../../store/userStore'
 import { FormButton } from '../../styles/FormButton'
 import { setId } from '../../store/form'
@@ -40,12 +40,13 @@ export const TimeSelector = () => {
                         В{'\u00A0'}данный момент окон для{'\u00A0'}записи нет
                     </NoAppointmentsText>
                 ) : (
-                    currentEvents.map((appointment) => {
+                    currentEvents.map((appointment: Event) => {
                         const date = new Date(appointment.dateTime)
                         const isChecked = isTimeEqual(choosenDate, date)
                         return (
                             <Time $view={view} key={appointment.dateTime.toISOString()}>
                                 <SwitchButton
+                                    $admin={role === 'ADMIN'}
                                     $view={view}
                                     disabled={!appointment.isAvailable}
                                     $hasAppointment={!!appointment.userId && appointment.userId === currentUser?.id}
@@ -63,6 +64,7 @@ export const TimeSelector = () => {
                                         {!!appointment.userId && appointment.userId === currentUser?.id && (
                                             <Text>вы записаны</Text>
                                         )}
+                                        {role === 'ADMIN' && !appointment.isAvailable && <Text>есть запись</Text>}
                                     </AppointmentInfo>
                                     {(role === 'ADMIN' ||
                                         (!!appointment.userId && appointment.userId === currentUser?.id)) && (
@@ -167,10 +169,6 @@ const Header = styled.h2<Props>`
     }
 `
 
-interface TimeProps extends Props {
-    $hasAppointment: boolean
-}
-
 const Text = styled.p`
     @media ${device.mobileS} {
         font-size: 9px;
@@ -244,16 +242,20 @@ const Label = styled.label<RoleProps>`
     }
 `
 
-const SwitchButton = styled.input<TimeProps>`
+const SwitchButton = styled.input<{
+    $view: SwitcherType
+    $hasAppointment: boolean
+    $admin: boolean
+}>`
     visibility: hidden;
     height: 0;
     width: 0;
 
     &:disabled + ${Label} {
-        background-color: ${(props) => props.theme.disable};
-        color: ${(props) => props.theme.gray};
         cursor: default;
-        outline: 1px solid ${(props) => props.theme.disable};
+        outline: ${(props) => (props.$admin ? `1px solid ${props.theme.accent3}` : `1px solid ${props.theme.disable}`)};
+        color: ${(props) => (props.$admin ? `${props.theme.accent3}` : `${props.theme.gray}`)};
+        background-color: ${(props) => (props.$admin ? `` : `${props.theme.disable}`)};
     }
 
     ${(props) =>

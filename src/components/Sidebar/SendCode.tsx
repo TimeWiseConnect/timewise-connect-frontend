@@ -7,7 +7,7 @@ import { Link } from '../../styles/Link'
 import { Button } from '../../styles/Button'
 import { styled } from 'styled-components'
 import { device } from '../../styles/const'
-import { LogInRequest, RegistrationRequest, makeACallFx } from '../../api/auth/logIn'
+import { makeACallFx } from '../../api/auth/logIn'
 import { ErrorMessage } from './ValidateCode'
 
 export const SendCode = () => {
@@ -20,8 +20,7 @@ export const SendCode = () => {
             $isCollapsed={collapsed}
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault()
-                const req: LogInRequest | RegistrationRequest = registration ? { phone, name } : { phone }
-                makeACallFx(req)
+                makeACallFx({ phone, name })
             }}
         >
             {registration ? (
