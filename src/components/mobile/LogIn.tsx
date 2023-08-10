@@ -70,7 +70,7 @@ const FootWrap = styled.div`
     color: ${(props) => props.theme.main};
 `
 
-const HeadWrap = styled.form`
+const HeadWrap = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
