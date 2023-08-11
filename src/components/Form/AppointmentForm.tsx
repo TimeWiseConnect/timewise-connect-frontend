@@ -110,7 +110,7 @@ const Layout = styled.div`
         height: fit-content;
         position: relative;
         display: block;
-        z-index: 1500;
+        z-index: 500;
     }
 `
 

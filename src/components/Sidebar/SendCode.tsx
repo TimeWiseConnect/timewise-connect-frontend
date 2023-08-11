@@ -72,7 +72,7 @@ export const SendCode = () => {
                     event.currentTarget.blur()
                 }}
             >
-                {registration ? 'Зарегистрироваться' : 'Отправить СМС'}
+                {registration ? 'Зарегистрироваться' : 'Отправить код'}
             </Button>
         </LoginFormLayout>
     )

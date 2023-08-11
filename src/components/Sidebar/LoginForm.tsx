@@ -21,6 +21,7 @@ export const LoginForm = () => {
 const Layout = styled.div<{
     $isCollapsed: boolean
 }>`
+    width: 100%;
     opacity: ${(props) => (props.$isCollapsed ? '0' : '1')};
     ${(props) => (props.$isCollapsed ? 'user-select: none;' : '')};
 `

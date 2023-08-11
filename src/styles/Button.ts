@@ -33,15 +33,15 @@ export const Button = styled.button`
 
     @media ${device.mobileS} {
         font-size: 14px;
-        padding: 16px 110px;
+        padding: 16px 0px;
     }
 
     @media ${device.tablet} {
-        padding: 10px 14.5px;
+        padding: 10px 0px;
     }
 
     @media ${device.laptop} {
-        padding: 18px 60px;
+        padding: 18px 0px;
         font-size: 16px;
     }
 `
