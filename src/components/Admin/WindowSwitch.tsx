@@ -34,7 +34,7 @@ export const WindowSwitch = () => {
 const Layout = styled.div`
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     color: ${(props) => props.theme.accent2};
 `
 
