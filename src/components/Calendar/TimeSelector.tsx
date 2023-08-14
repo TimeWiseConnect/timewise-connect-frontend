@@ -93,7 +93,9 @@ export const TimeSelector = () => {
             </Appointments>
             {role === 'ADMIN' && (
                 <>
-                    <AddTimeButton onClick={() => setAddWindowOpen(true)}>Добавить время</AddTimeButton>
+                    <AddTimeButton onClick={() => setAddWindowOpen(true)} type="button">
+                        Добавить время
+                    </AddTimeButton>
                     <Modal
                         title="Добавить окно для записи"
                         isOpen={open}
@@ -312,6 +314,7 @@ const Appointments = styled.div<Props>`
 `
 
 const AddTimeButton = styled(FormButton)`
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
