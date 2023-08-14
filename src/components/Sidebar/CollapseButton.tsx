@@ -37,7 +37,7 @@ const Button = styled(InvisibleButton)<{ $closed: boolean }>`
     }
 
     @media ${device.laptop} {
-        right: calc(${(props) => (props.$closed ? '75px' : '328px')} - 13px);
+        right: calc(${(props) => (props.$closed ? '100px' : '328px')} - 13px);
     }
 
     @media (hover: hover) {

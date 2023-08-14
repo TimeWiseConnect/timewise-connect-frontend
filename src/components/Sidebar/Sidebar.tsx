@@ -48,7 +48,7 @@ const SidebarLayout = styled.div<SidebarProps>`
     }
 
     @media ${device.laptop} {
-        width: ${(props) => (props.$isCollapsed ? '75px' : '328px')};
+        width: ${(props) => (props.$isCollapsed ? '100px' : '328px')};
     }
 `
 
