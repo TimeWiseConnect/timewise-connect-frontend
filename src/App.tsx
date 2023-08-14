@@ -10,6 +10,7 @@ import AppRouter from './router/AppRouter'
 import { Theme } from './components/Theme'
 import { device } from './styles/const'
 import { useRole } from './hooks/useRoles'
+import { useMediaQuery } from './hooks/useMediaQuery'
 
 export const App: FC = () => {
     useRemoveFocusWhenNotTab()
@@ -21,10 +22,12 @@ export const App: FC = () => {
 
     const loading = useStore(checkAuthFx.pending)
     const fetchEvent = useEvent(checkAuthFx)
+    const matches = useMediaQuery(device.tablet)
 
     return (
         <>
             <GlobalStyle />
+            <>{console.log(matches)}</>
             <Theme>
                 {loading ? (
                     <Layout></Layout>
@@ -32,9 +35,9 @@ export const App: FC = () => {
                     <Wrapper>
                         <Layout>
                             <AppRouter />
-                            {window.matchMedia(device.tablet).matches ? <Sidebar /> : <Mobile />}
+                            {matches ? <Sidebar /> : <Mobile />}
                         </Layout>
-                        {window.matchMedia(device.tablet).matches ? <Footer /> : null}
+                        {matches ? <Footer /> : null}
                     </Wrapper>
                 )}
             </Theme>
