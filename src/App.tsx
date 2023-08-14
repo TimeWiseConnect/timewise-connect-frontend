@@ -3,7 +3,6 @@ import { createGlobalStyle, styled } from 'styled-components'
 import { useStore, useEvent } from 'effector-react'
 import { checkAuthFx } from './api/auth/auth'
 import Sidebar from './components/Sidebar/Sidebar'
-import useWindowDimensions from './hooks/useWindowDimensions'
 import useRemoveFocusWhenNotTab from './hooks/useRemoveFocusWhenNotTab'
 import Mobile from './components/mobile/Mobile'
 import { Footer } from './components/Footer/Footer'
@@ -13,7 +12,6 @@ import { device } from './styles/const'
 import { useRole } from './hooks/useRoles'
 
 export const App: FC = () => {
-    const { width } = useWindowDimensions()
     useRemoveFocusWhenNotTab()
     useRole()
     useEffect(() => {
@@ -34,9 +32,9 @@ export const App: FC = () => {
                     <Wrapper>
                         <Layout>
                             <AppRouter />
-                            {width >= 768 ? <Sidebar /> : <Mobile />}
+                            {window.matchMedia(device.tablet).matches ? <Sidebar /> : <Mobile />}
                         </Layout>
-                        {width >= 768 ? <Footer /> : null}
+                        {window.matchMedia(device.tablet).matches ? <Footer /> : null}
                     </Wrapper>
                 )}
             </Theme>

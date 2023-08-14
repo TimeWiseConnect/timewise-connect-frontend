@@ -17,8 +17,7 @@ export const MonthView = () => {
 
     const days: Date[] = Array(daysInView)
 
-    let startDay = (new Date(year, month, date).getDay() % 7) - 1
-    if (startDay < 0) startDay = 6
+    const startDay = (new Date(year, month, date).getDay() % 7) - 1
     for (let i = 0; i <= startDay; i++) days[startDay - i] = new Date(year, month, date - i)
     for (let i = 0; i < daysInView - startDay; i++) days[startDay + i] = new Date(year, month, date + i)
 
